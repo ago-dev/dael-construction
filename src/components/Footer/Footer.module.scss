@@ -1,0 +1,92 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+@use "sass:color";
+
+.footer {
+  height: 120px;
+  background: vars.$primary-color;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.contentContainer {
+  @include mix.content-container;
+}
+
+.footerContent {
+  @include mix.flex-between;
+  
+  @include mix.mobile {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  
+  @include mix.mobile {
+    margin-bottom: 20px;
+  }
+}
+
+.navigationContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  
+  @include mix.mobile {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.navigation {
+  display: flex;
+  gap: 32px;
+  
+  @include mix.mobile {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.navLink {
+  font-family: var(--font-geist-sans);
+  font-weight: 300;
+  font-size: vars.$font-size-medium;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: right;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: vars.$white;
+  transition: opacity 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.socialIcons {
+  display: flex;
+  gap: vars.$spacing-sm;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  @include mix.flex-center;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(vars.$white, 0.2);
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: rgba(vars.$white, 0.1);
+  }
+} 

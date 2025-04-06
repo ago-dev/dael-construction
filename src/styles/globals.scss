@@ -1,0 +1,34 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #fff;
+}
+
+:root {
+  // Light mode colors
+  --text-color: #121212;
+  --background-color: #ffffff;
+  --header-text-color: #ffffff; // For transparent header
+  --header-icon-folder: 'light';
+  --button-bg: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] {
+  // Dark mode colors
+  --text-color: #ffffff;
+  --background-color: #121212;
+  --header-text-color: #ffffff;
+  --header-icon-folder: 'dark';
+  --button-bg: rgba(0, 0, 0, 0.2);
+}
+
+// Rest of your global styles

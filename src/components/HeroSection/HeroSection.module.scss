@@ -1,0 +1,274 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+@use "sass:color";
+
+// Hero Section Container
+.heroSection {
+  height: 100vh; // Full viewport height
+  width: 100%;
+  background-color: vars.$secondary-color; // Fallback color
+  background-size: cover;
+  background-position: top center; // Show the top part of the image
+  background-repeat: no-repeat;
+  position: relative;
+  transition: background-image 0.5s ease-in-out;
+  
+  &.transitioning {
+    animation: fadeTransition 0.5s ease-in-out;
+  }
+  
+  // Responsive adjustments
+  @include mix.mobile {
+    height: 100vh; // Full viewport height on mobile
+    min-height: 600px; // Minimum height to ensure content visibility
+    background-position: top left; // Show the beginning of the image on mobile
+  }
+  
+  @media (min-width: 2000px) {
+    background-size: contain;
+  }
+}
+
+// Background images for carousel
+.bg-0 { background-image: url('/images/backgrounds/bg1.png'); }
+.bg-1 { background-image: url('/images/backgrounds/bg2.png'); }
+.bg-2 { background-image: url('/images/backgrounds/bg3.png'); }
+.bg-3 { background-image: url('/images/backgrounds/bg4.png'); }
+
+// Fade transition animation
+@keyframes fadeTransition {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+// Content container
+.contentContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+    z-index: 1;
+  }
+}
+
+// Main content
+.content {
+  @include mix.content-container;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: vars.$white;
+  position: relative;
+  z-index: 2;
+  
+  @include mix.mobile {
+    margin-bottom: 60px;
+    
+    h1 {
+      font-size: 36px;
+      line-height: 110%;
+      margin-bottom: vars.$spacing-md;
+    }
+    
+    p {
+      font-size: 15px;
+      margin-bottom: vars.$spacing-lg;
+    }
+  }
+  
+  // Typography
+  h1 {
+    font-family: 'Bai Jamjuree', sans-serif;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 100%;
+    letter-spacing: 0;
+    margin-bottom: vars.$spacing-lg;
+    max-width: 654px;
+  }
+  
+  p {
+    font-family: var(--font-geist-sans);
+    font-weight: 400;
+    font-size: vars.$font-size-medium;
+    line-height: 150%;
+    letter-spacing: 0;
+    margin-bottom: vars.$spacing-xl;
+    max-width: 653px;
+  }
+}
+
+// Button container
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: vars.$spacing-md;
+  
+  @include mix.mobile {
+    @include mix.flex-between;
+    flex-direction: row; // Keep as row on mobile
+  }
+  
+  // CTA Button
+  button {
+    width: 177px;
+    height: 42px;
+    padding: 12px;
+    @include mix.flex-center;
+    gap: vars.$spacing-sm;
+    @include mix.primary-button;
+    
+    @include mix.mobile {
+      width: 177px; // Keep same width on mobile
+    }
+  }
+}
+
+// Button icon
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+// Carousel control
+.carouselControl {
+  width: 282px;
+  height: 33px;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  @include mix.flex-between;
+  
+  @include mix.mobile {
+    width: auto; // Adjust width to content
+    padding: 8px 10px;
+  }
+}
+
+// Project name
+.projectName {
+  font-family: var(--font-geist-sans);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: vars.$white;
+  
+  @include mix.mobile {
+    display: none; // Hide on mobile
+  }
+}
+
+// Project year
+.projectYear {
+  font-family: var(--font-geist-sans);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #545352;
+  
+  @include mix.mobile {
+    display: none; // Hide on mobile
+  }
+}
+
+// Carousel navigation
+.carouselNav {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  position: relative;
+  
+  @include mix.mobile {
+    margin: 0 auto; // Center the dots on mobile
+  }
+}
+
+// Current carousel dot
+.carouselDotCurrent {
+  width: 16px;
+  height: 8px;
+  border-radius: 8px;
+  @include mix.flex-center;
+  position: relative;
+  transition: width 0.3s ease-in-out;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: vars.$primary-color;
+    border-radius: 8px;
+    opacity: 0;
+    animation: dotAppear 0.3s forwards;
+  }
+  
+  img {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Carousel dot
+.carouselDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  @include mix.flex-center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    transform: scale(1.2);
+  }
+  
+  &.animating {
+    animation: dotMerge 0.3s forwards;
+  }
+  
+  img {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+}
+
+// Dot animations
+@keyframes dotMerge {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(1); }
+}
+
+@keyframes dotAppear {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.carousel {
+  // Styles for the carousel will go here
+} 

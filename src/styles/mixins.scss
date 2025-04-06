@@ -1,0 +1,149 @@
+@use 'variables' as vars;
+@use "sass:color";
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Media query mixins
+@mixin breakpoint($point) {
+  @media (min-width: $point) {
+    @content;
+  }
+}
+
+// Accessibility mixins
+@mixin focus-outline {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+// Typography mixins
+@mixin heading-large {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 100%;
+  letter-spacing: 0;
+}
+
+@mixin body-text {
+  font-family: var(--font-geist-sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 150%;
+  letter-spacing: 0;
+}
+
+// Media queries
+@mixin mobile {
+  @media (max-width: vars.$breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: vars.$breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: vars.$breakpoint-desktop) {
+    @content;
+  }
+}
+
+// Common container style
+@mixin content-container {
+  width: vars.$container-width;
+  margin: 0 auto;
+  
+  @include desktop {
+    width: vars.$container-width-small;
+  }
+}
+
+// Button styles
+@mixin primary-button {
+  background: vars.$primary-color;
+  border: none;
+  color: vars.$white;
+  font-family: var(--font-haskoy), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: color.adjust(vars.$primary-color, $lightness: -10%);
+  }
+}
+
+// Section heading
+@mixin section-heading {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-weight: 600;
+  font-size: vars.$font-size-xxlarge;
+  line-height: 110%;
+  letter-spacing: 0%;
+  color: vars.$text-dark;
+}
+
+// Section paragraph
+@mixin section-paragraph {
+  font-family: var(--font-geist-sans);
+  font-weight: 400;
+  font-size: vars.$font-size-medium;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: justify;
+  color: vars.$text-medium;
+}
+
+// Brand text style
+@mixin brand-text {
+  font-family: var(--font-haskoy), sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: vars.$primary-color;
+}
+
+// Responsive mixins
+@mixin responsive-container {
+  width: 82%;
+  
+  @media (max-width: 1410px) {
+    width: 92%;
+  }
+}
+
+// Common animations
+@mixin fade-in {
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  animation: fadeIn 0.3s ease-in-out forwards;
+}

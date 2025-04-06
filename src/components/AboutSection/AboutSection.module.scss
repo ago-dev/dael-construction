@@ -1,0 +1,147 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+@use "sass:color";
+
+.aboutSection {
+  max-height: 888px;
+  width: 100%;
+  background-color: vars.$white;
+  position: relative;
+  overflow: hidden;
+}
+
+.contentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  @include mix.content-container;
+  display: flex;
+  justify-content: space-between;
+  padding: 128px 0;
+  
+  @include mix.mobile {
+    flex-direction: column;
+  }
+}
+
+.textContent {
+  width: 48%;
+  padding-right: vars.$spacing-xxl;
+  @include mix.flex-column;
+  
+  @include mix.mobile {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: vars.$spacing-xxl;
+  }
+  
+  .logo {
+    margin-bottom: vars.$spacing-lg;
+  }
+  
+  h2 {
+    @include mix.section-heading;
+    margin-bottom: vars.$spacing-lg;
+  }
+  
+  p {
+    max-width: 464px;
+    @include mix.section-paragraph;
+    margin-bottom: vars.$spacing-xxl;
+  }
+}
+
+.statsContainer {
+  display: flex;
+  gap: vars.$spacing-xxl;
+  margin-bottom: vars.$spacing-xxl;
+}
+
+.statItem {
+  @include mix.flex-column;
+  width: 137px;
+  gap: vars.$spacing-xs;
+  
+  .statNumber {
+    font-family: 'Bai Jamjuree', sans-serif;
+    font-weight: 700;
+    font-size: vars.$font-size-huge;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: vars.$primary-color;
+    margin-bottom: vars.$spacing-sm;
+  }
+  
+  .statLabel {
+    font-family: var(--font-geist-sans);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: vars.$text-light;
+  }
+}
+
+.aboutButton {
+  width: 144px;
+  height: 42px;
+  padding: 12px;
+  @include mix.primary-button;
+  @include mix.flex-center;
+  gap: vars.$spacing-sm;
+  text-align: left;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  transform: scale(1, -1);
+}
+
+.imageContainer {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 638px;
+  
+  @include mix.mobile {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    height: 400px;
+    margin-top: vars.$spacing-xxl;
+  }
+}
+
+.aboutImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-position: right;
+}
+
+.brandContainer {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin-bottom: vars.$spacing-lg;
+}
+
+.brandText {
+  @include mix.brand-text;
+}
+
+.brandLine {
+  display: block;
+  width: 75px;
+  height: 75px;
+  margin-left: 10px;
+} 

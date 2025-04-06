@@ -1,0 +1,229 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
+.header {
+  height: 97px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 8px; 
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-geist-sans);
+  
+  // pseudo-element for the colored strip
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #DB4F35;
+  }
+}
+
+.container {
+  width: 82%;
+  max-width: 100%;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  position: relative; // For positioning the hamburger
+  @media (max-width: 1410px) {
+    width: 92%;
+  }
+
+  @media (max-width: 768px) {
+   justify-content: flex-start;
+  }
+}
+
+
+.logo {
+  display: block;
+  @media (max-width: 768px) {
+    margin-left: 10px;
+    margin-top: 3px;
+  }
+}
+
+.nav {
+  display: block;
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  gap: 60px; // Space between nav items
+
+  @media (max-width: 1000px) {
+    gap: 30px; // Space be
+    font-size: 13px;
+  }
+  
+  li {
+    align-content: center;
+    a {
+      color: var(--header-text-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 5%;
+      
+      &:hover {
+        opacity: .8;
+        transition: opacity 0.3s ease;
+      }
+    }
+  }
+}
+
+.mobileMenuButton {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px;
+  background: transparent;
+  cursor: pointer;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 16px; // Position at the left
+  }
+}
+
+.hamburgerIcon {
+  width: 36px;
+  height: 36px;
+}
+
+// Mobile menu styles
+.nav {
+  @media (max-width: 768px) {
+    display: none;
+    
+    &.navOpen {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 100;
+    }
+  }
+}
+
+.mobileMenuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.langSelector {
+  position: relative;
+
+}
+
+.langButton {
+  width: 75px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 99px;
+  border: none;
+  padding: 8px;
+  backdrop-filter: blur(31px);
+  -webkit-backdrop-filter: blur(31px); // For Safari support
+  background: var(--button-bg);
+  cursor: pointer;
+  color: var(--header-text-color);
+  font-family: var(--font-geist-sans);
+  text-transform: uppercase;
+
+  
+  &:hover {
+    color: #DB4F35;
+  }
+}
+
+.flagIcon {
+  border-radius: 4px;
+}
+
+.langArrow {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  transition: transform 0.3s ease;
+  right: 5px;
+}
+
+.langButton[aria-expanded="true"] .langArrow {
+  transform: rotate(180deg);
+}
+
+.langDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 8px 0;
+  margin-top: 8px;
+  min-width: 80px;
+  z-index: 10;
+  justify-content: center;
+  
+  li {
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-align: left;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #121212;
+      font-family: var(--font-geist-sans);
+      text-transform: uppercase;
+
+      img {
+        margin-right: 5px;
+      }
+
+
+      &:hover {
+        background-color: #f5f5f5;
+        color: #DB4F35;
+      }
+    }
+  }
+}
+

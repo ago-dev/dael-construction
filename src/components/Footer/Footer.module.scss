@@ -8,6 +8,11 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  @include mix.mobile {
+    height: auto;
+    padding: 20px 0;
+  }
 }
 
 .contentContainer {

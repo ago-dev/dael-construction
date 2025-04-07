@@ -7,6 +7,10 @@
   background-color: vars.$white;
   padding: 80px 0;
   border-top: 1px solid #E3E3E3;
+
+  @include mix.mobile {
+    padding: 40px 0;
+  }
 }
 
 .contentContainer {
@@ -35,6 +39,10 @@
   h2 {
     @include mix.section-heading;
     margin-bottom: vars.$spacing-lg;
+
+    @include mix.mobile {
+      font-size: vars.$font-size-xlarge;
+    }
   }
   
   p {
@@ -124,6 +132,10 @@
   margin-top: 50px;
   @include mix.flex-column;
   gap: vars.$spacing-md;
+
+  @include mix.mobile {
+    margin-top: 30px;
+  }
 }
 
 .contactItem {
@@ -132,8 +144,8 @@
   gap: 12px;
   
   .contactIcon {
-    width: 15.83px;
-    height: 15.83px;
+    width: 20px;
+    height: 20px;
     @include mix.flex-center;
     margin-top: vars.$spacing-xs;
   }
@@ -147,11 +159,16 @@
     text-align: right;
     color: vars.$black;
     margin: 0;
+
+    @include mix.mobile {
+      font-size: 18px;
+      text-align: start;
+    }
   }
 }
 
 .mapIframe {
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
   max-height: 398px;

@@ -8,6 +8,11 @@
   background-color: vars.$white;
   position: relative;
   overflow: hidden;
+  
+  @include mix.mobile {
+    max-height: none;
+    overflow: visible;
+  }
 }
 
 .contentContainer {
@@ -24,6 +29,7 @@
   
   @include mix.mobile {
     flex-direction: column;
+    padding: 40px 0 0 0;
   }
 }
 
@@ -82,6 +88,10 @@
     line-height: 150%;
     letter-spacing: 0.04em;
     color: vars.$text-light;
+
+    @include mix.mobile {
+      font-size: 12px;
+    }
   }
 }
 
@@ -115,9 +125,12 @@
     top: auto;
     right: auto;
     transform: none;
-    width: 100%;
-    height: 400px;
-    margin-top: vars.$spacing-xxl;
+    width: 100vw;
+    height: 227px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    margin-top: vars.$spacing-xl;
+    order: 3;
   }
 }
 
@@ -126,6 +139,11 @@
   width: 100%;
   height: 100%;
   object-position: right;
+  
+  @include mix.mobile {
+    object-position: center;
+    height: 227px;
+  }
 }
 
 .brandContainer {
@@ -133,6 +151,11 @@
   align-items: center;
   gap: vars.$spacing-sm;
   margin-bottom: vars.$spacing-lg;
+
+  @include mix.mobile {
+    margin-bottom: 0;
+    height: 25px;
+  }
 }
 
 .brandText {

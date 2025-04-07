@@ -114,7 +114,20 @@ const ProjectsSection = () => {
             ))}
           </div>
         </div>
-        <div className={styles.navigationButtons}>
+        
+        <div className={styles.mobileButtonContainer}>
+          <button className={styles.mobileProjectsButton}>
+          TË GJITHA PROJEKTET
+            <Image 
+              src="/images/icons/tabler-icon-arrow-down-left.svg"
+              alt="Arrow"
+              width={16}
+              height={16}
+              className={styles.buttonIcon}
+            />
+          </button>
+          
+          <div className={styles.navigationButtons}>
             <button 
               className={`${styles.navButton} ${!canScrollLeft ? styles.navButtonDisabled : ''}`}
               onClick={scrollLeft}
@@ -141,6 +154,7 @@ const ProjectsSection = () => {
               />
             </button>
           </div>
+        </div>
       </div>
     </section>
   );

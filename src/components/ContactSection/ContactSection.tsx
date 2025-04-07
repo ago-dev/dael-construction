@@ -109,8 +109,7 @@ const ContactSection = () => {
     setErrors(newErrors);
     
     if (!hasErrors) {
-      // Here you would typically send the form data to your backend
-      console.log('Form submitted:', formData);
+
       
       // Reset form after submission
       setFormData({

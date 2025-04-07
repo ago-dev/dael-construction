@@ -45,15 +45,14 @@ const Header = () => {
           )}
         </button>
         
-        <Link href="/" className={styles.logo}>
+        <div className={styles.logoContainer}>
           <Image 
-            src="/images/logo.png" 
-            alt="Dael Construction Logo" 
-            width={150} 
-            height={33} 
-            priority
+            src="/images/logo.svg"
+            alt="Dael Construction Logo"
+            width={120}
+            height={40}
           />
-        </Link>
+        </div>
         
         <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.navOpen : ''}`}>
           <ul className={styles.navList}>

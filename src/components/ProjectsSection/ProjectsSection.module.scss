@@ -133,7 +133,7 @@
   right: 0;
   bottom: -60px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   gap: 6px;
   
   @include mix.mobile {

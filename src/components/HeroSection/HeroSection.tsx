@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import styles from './HeroSection.module.scss';
 import Image from 'next/image';
 import { projects } from '@/data/projects';

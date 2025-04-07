@@ -13,8 +13,16 @@
   }
 }
 
-.contentContainer {
+.content {
   @include mix.content-container;
+  padding: 128px 0;
+  display: flex;
+  justify-content: space-between;
+  
+  @include mix.mobile {
+    flex-direction: column;
+    padding: 40px 0 0 0;
+  }
 }
 
 .contactContent {

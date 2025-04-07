@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "./page.module.scss";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import AboutSection from "@/components/AboutSection/AboutSection";

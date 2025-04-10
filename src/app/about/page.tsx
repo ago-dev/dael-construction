@@ -16,7 +16,7 @@ export default function AboutPage() {
     {
       icon: '/images/icons/about-icon.svg',
       title: 'Profesionalizëm & Përkushtim',
-      description: 'Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë.'
+      description: "Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë."
     },
     {
       icon: '/images/icons/about-icon.svg',
@@ -34,7 +34,7 @@ export default function AboutPage() {
     {
       icon: '/images/icons/about-icon.svg',
       title: 'Profesionalizëm & Përkushtim',
-      description: 'Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë.'
+      description: "Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë."
     },
     {
       icon: '/images/icons/about-icon.svg',

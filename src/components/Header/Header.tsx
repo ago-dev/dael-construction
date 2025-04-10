@@ -4,14 +4,12 @@ import styles from './Header.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useTheme } from '@/context/ThemeContext';
 
 interface HeaderProps {
   variant?: 'light' | 'dark';
 }
 
 const Header = ({ variant = 'light' }: HeaderProps) => {
-  const { theme } = useTheme();
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [isMobileLangDropdownOpen, setIsMobileLangDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

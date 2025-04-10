@@ -23,6 +23,24 @@
     height: 8px;
     background-color: #DB4F35;
   }
+  
+  // Default light theme styles
+  --header-text-color: #FFFFFF;
+  --button-bg: rgba(255, 255, 255, 0.1);
+  
+  // Dark theme styles
+  &.dark {
+    --header-text-color: #121212;
+    --button-bg: rgba(0, 0, 0, 0.05);
+    
+    .navList li a {
+      color: #121212;
+    }
+    
+    .langButton {
+      color: #121212;
+    }
+  }
 }
 
 .container {
@@ -43,6 +61,9 @@
   }
 }
 
+.logoContainer {
+  // This class is used in the TSX
+}
 
 .logo {
   display: block;
@@ -85,19 +106,14 @@
 
 .mobileMenuButton {
   display: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px;
-  background: transparent;
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 8px;
+  z-index: 1001; // Higher than overlay
   
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    left: 16px; // Position at the left
+  @include mix.mobile {
+    display: block;
   }
 }
 
@@ -127,15 +143,111 @@
 .mobileMenuOverlay {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 0; // Start with 0 width
   height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 50;
+  background-color: #DB4F35;
+  z-index: 1000;
+  overflow-x: hidden;
+  transition: width 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 80px 0 40px;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  
+  &.open {
+    width: 80%; // Expand to 80% of screen width when open
+  }
+}
+
+.mobileNavList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid rgba(vars.$white, 0.1);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    a {
+      display: block;
+      padding: 20px 32px;
+      font-family: var(--font-haskoy), sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: vars.$white;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: rgba(vars.$white, 0.05);
+      }
+    }
+  }
+}
+
+.mobileLangSelector {
+  margin-top: auto;
+  padding: 0 32px;
+  position: relative;
+  margin-bottom: 32px; // Add space at the bottom
+
+  @include mix.mobile {
+    margin-top: 10px;
+  }
+  
+  .mobileLangButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 99px;
+    padding: 8px 16px;
+    font-family: var(--font-geist-sans);
+    font-weight: 500;
+    font-size: 16px;
+    color: vars.$white;
+    cursor: pointer;
+    
+    .flagIcon {
+      border-radius: 2px;
+    }
+    
+    .langArrow {
+      width: 12px !important;
+      height: 12px !important;
+      transition: transform 0.3s ease;
+    }
+    
+    &[aria-expanded="true"] .langArrow {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .langSelector {
@@ -151,16 +263,15 @@
   justify-content: center;
   gap: 8px;
   border-radius: 99px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 8px;
   backdrop-filter: blur(31px);
-  -webkit-backdrop-filter: blur(31px); // For Safari support
+  -webkit-backdrop-filter: blur(31px);
   background: var(--button-bg);
   cursor: pointer;
   color: var(--header-text-color);
   font-family: var(--font-geist-sans);
   text-transform: uppercase;
-
   
   &:hover {
     color: #DB4F35;
@@ -172,11 +283,12 @@
 }
 
 .langArrow {
-  width: 16px;
-  height: 16px;
-  position: relative;
+  width: 12px !important;
+  height: 12px !important;
   transition: transform 0.3s ease;
-  right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .langButton[aria-expanded="true"] .langArrow {
@@ -197,7 +309,7 @@
   min-width: 80px;
   z-index: 10;
   justify-content: center;
-  
+
   li {
 
     button {
@@ -224,6 +336,80 @@
         color: #DB4F35;
       }
     }
+  }
+}
+
+.mobileLangDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; // Align with the button
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 8px 0;
+  min-width: 120px;
+  z-index: 10;
+
+  @include mix.mobile {
+    left: 30px;
+  }
+  
+  li {
+    border-bottom: none !important;
+    
+    button {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #121212;
+      font-family: var(--font-geist-sans);
+      font-size: 14px;
+      
+      &:hover {
+        background-color: #f5f5f5;
+      }
+      
+      .flagIcon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// Add a page overlay when mobile menu is open
+.pageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999; // Just below the mobile menu
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Add styles to reduce hamburger opacity when sidebar is open
+.container.menuOpen {
+  .mobileMenuButton {
+    opacity: 0.7;
+    pointer-events: none; // Prevent clicking while menu is open
+  }
+  
+  .logoContainer {
+    opacity: 0.7;
   }
 }
 

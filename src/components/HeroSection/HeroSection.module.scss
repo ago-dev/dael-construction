@@ -65,13 +65,13 @@
 // Main content
 .content {
   @include mix.content-container;
+  position: relative;
+  z-index: 2;
   margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   color: vars.$white;
-  position: relative;
-  z-index: 2;
   
   @include mix.mobile {
     margin-bottom: 60px;

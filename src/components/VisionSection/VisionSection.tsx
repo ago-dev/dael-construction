@@ -2,6 +2,7 @@
 
 import styles from './VisionSection.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const VisionSection = () => {
   return (
@@ -31,7 +32,7 @@ const VisionSection = () => {
             </div>
             <h2>Ne fokusohemi në krijimin<br />e hapësirave dinamike.</h2>
             
-            <button className={styles.visionButton}>
+            <Link href="/vision" className={styles.visionButton}>
               VIZIONI YNË
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
@@ -40,7 +41,7 @@ const VisionSection = () => {
                 height={16}
                 className={styles.buttonIcon}
               />
-            </button>
+            </Link>
           </div>
           
           <div className={styles.visionDescription}>

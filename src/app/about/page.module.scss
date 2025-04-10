@@ -1,0 +1,159 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
+.aboutPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.heroSection {
+  position: relative;
+  width: 100%;
+  height: 594px;
+  margin-top: 97px; // Height of the header
+  overflow: hidden;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroContent {
+  position: absolute;
+  width: 628px;
+  height: 160px;
+  bottom: 0;
+  left: 9%;
+  padding-top: 8px;
+  z-index: 2;
+  
+  // Orange line at the top
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #DB4F35;
+  }
+  
+  h2 {
+    font-family: var(--font-haskoy);
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 110%;
+    color: vars.$white;
+    margin-top: 24px;
+  }
+  
+  @include mix.mobile {
+    width: 90%;
+    left: 5%;
+    height: auto;
+    bottom: 40px;
+    
+    h2 {
+      font-size: 36px;
+      margin-top: 16px;
+    }
+  }
+}
+
+.brandContainer {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin-top: 12px;
+}
+
+.brandText {
+  @include mix.brand-text;
+  color: vars.$white;
+}
+
+.brandLine {
+  display: block;
+  width: 75px;
+  height: 1px;
+  background-color: vars.$primary-color;
+  margin-left: 10px;
+}
+
+.main {
+  flex: 1;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background-color: vars.$white;
+}
+
+.container {
+  @include mix.content-container;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.description {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding-left: 6%; // Match the left position of the title
+  
+  @include mix.mobile {
+    padding-left: 5%; // Match mobile adjustment
+  }
+  
+  p {
+    max-width: 730px;
+    font-family: var(--font-geist-sans);
+    font-size: 18px;
+    line-height: 175%;
+    letter-spacing: 0%;
+    text-align: justify;
+    color: vars.$text-medium;
+    
+    @include mix.mobile {
+      font-size: 16px;
+      line-height: 160%;
+    }
+  }
+}
+
+.pageTitle {
+  font-family: var(--font-haskoy);
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  color: vars.$black;
+  
+  @include mix.mobile {
+    font-size: 36px;
+    margin-bottom: 24px;
+  }
+}
+
+.contentPlaceholder {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  
+  p {
+    font-family: var(--font-geist-sans);
+    font-size: 18px;
+    color: #666;
+  }
+}
+
+// Mobile responsiveness
+@include mix.mobile {
+  .heroSection {
+    height: 300px;
+  }
+} 

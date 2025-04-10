@@ -1,0 +1,157 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
+.descriptiveCard {
+  width: 100%;
+  
+  @include mix.mobile {
+    padding: 40px 0;
+  }
+  margin-top: 100px;
+}
+
+.contentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  gap: 64px;
+  justify-content: space-between;
+  
+  &.reversed {
+    flex-direction: row-reverse;
+  }
+  
+  @include mix.mobile {
+    flex-direction: column;
+    gap: 32px;
+    
+    &.reversed {
+      flex-direction: column;
+    }
+  }
+}
+
+.imageContainer {
+  width: 710px;
+  max-width: 48%;
+  position: relative;
+  overflow: hidden;
+  
+  @include mix.mobile {
+    width: 100%;
+    max-width: 100%;
+    height: 300px;
+  }
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.descriptionContainer {
+  max-width: 509px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10%;
+  margin-left: 5%;
+  @include mix.mobile {
+    width: 100%;
+    gap: 32px;
+  }
+  padding: 40px 0;
+
+  p {
+    opacity: 0.8;
+  }
+}
+
+.brandContainer {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin-bottom: 30px;
+}
+
+.brandText {
+  @include mix.brand-text;
+}
+
+.brandLine {
+  display: block;
+  width: 75px;
+  height: 1px;
+  background-color: vars.$primary-color;
+  margin-left: 10px;
+}
+
+.introText {
+  font-family: 'Geist', var(--font-geist-sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: justify;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.descriptionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 509px;
+  margin-bottom: 30px;
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  
+  h3 {
+    font-family: var(--font-bai-jamjuree);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    
+    
+    @include mix.mobile {
+      font-size: 24px;
+    }
+  }
+}
+
+.iconContainer {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: vars.$secondary-color;
+  border-radius: 4px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.descriptionItem p {
+  font-family: var(--font-geist-sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0;
+  text-align: justify;
+  opacity: 0.8;
+  margin: 0;
+  color: #FFFFFFCC;
+} 

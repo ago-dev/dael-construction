@@ -2,10 +2,11 @@
 
 import styles from './AboutSection.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const AboutSection = () => {
   return (
-    <section className={styles.aboutSection}>
+    <section className={styles.aboutSection} id="aboutSection">
       <div className={styles.contentContainer}>
         <div className={styles.content}>
           <div className={styles.textContent}>
@@ -37,7 +38,7 @@ const AboutSection = () => {
               </div>
             </div>
             
-            <button className={styles.aboutButton}>
+            <Link href="/about" className={styles.aboutButton}>
               RRETH NESH
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
@@ -46,7 +47,7 @@ const AboutSection = () => {
                 height={16}
                 className={styles.buttonIcon}
               />
-            </button>
+            </Link>
           </div>
           <div className={styles.imageContainer}>
             <Image

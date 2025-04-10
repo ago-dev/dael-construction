@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './ProjectsSection.module.scss';
 import Image from 'next/image';
 import { projects } from '@/data/projects';
+import Link from 'next/link';
 
 const ProjectsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -69,7 +70,7 @@ const ProjectsSection = () => {
             </div>
             <p>Ne kemi zhvilluar dhjetëra projekte rezidenciale në Tiranë, duke ofruar standardet më të larta në ndërtim, dizajn funksional dhe hapësira të mirë organizuara.</p>
           </div>
-          <button className={styles.projectsButton}>
+          <Link href="/projects" className={styles.projectsButton}>
             TË GJITHA PROJEKTET
             <Image 
               src="/images/icons/tabler-icon-arrow-down-left.svg"
@@ -78,7 +79,7 @@ const ProjectsSection = () => {
               height={16}
               className={styles.buttonIcon}
             />
-          </button>
+          </Link>
         </div>
         
         <div className={styles.galleryWrapper}>
@@ -116,8 +117,8 @@ const ProjectsSection = () => {
         </div>
         
         <div className={styles.mobileButtonContainer}>
-          <button className={styles.mobileProjectsButton}>
-          TË GJITHA PROJEKTET
+          <Link href="/projects" className={styles.mobileProjectsButton}>
+            TË GJITHA PROJEKTET
             <Image 
               src="/images/icons/tabler-icon-arrow-down-left.svg"
               alt="Arrow"
@@ -125,7 +126,7 @@ const ProjectsSection = () => {
               height={16}
               className={styles.buttonIcon}
             />
-          </button>
+          </Link>
           
           <div className={styles.navigationButtons}>
             <button 

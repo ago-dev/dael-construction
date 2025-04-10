@@ -103,6 +103,7 @@
   @include mix.flex-center;
   gap: vars.$spacing-sm;
   text-align: left;
+  text-decoration: none;
 }
 
 .buttonIcon {

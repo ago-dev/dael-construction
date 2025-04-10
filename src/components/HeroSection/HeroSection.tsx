@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import styles from './HeroSection.module.scss';
 import Image from 'next/image';
 import { projects } from '@/data/projects';
+import { scrollToElement } from '@/utils/scrollUtils';
 
 const HeroSection = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
@@ -49,6 +50,10 @@ const HeroSection = () => {
   }, [currentProjectIndex, isTransitioning]);
   */
 
+  const handleScrollToAbout = () => {
+    scrollToElement('aboutSection');
+  };
+
   return (
     <section 
       className={`${styles.heroSection} ${isTransitioning ? styles.transitioning : ''} ${styles['bg-' + currentProjectIndex]}`}
@@ -60,7 +65,7 @@ const HeroSection = () => {
           frymëzojnë jetesë moderne.</h1>
           <p>Me mbi 17 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.</p>
           <div className={styles.buttonContainer}>
-            <button>
+            <button onClick={handleScrollToAbout}>
               SHIKO MË SHUMË
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"

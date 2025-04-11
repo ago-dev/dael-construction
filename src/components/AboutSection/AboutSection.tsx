@@ -51,7 +51,7 @@ const AboutSection = () => {
           </div>
           <div className={styles.imageContainer}>
             <Image
-              src="/images/about/about-image.png"
+              src="/images/about-image.png"
               alt="About Dael Construction"
               fill
               className={styles.aboutImage}

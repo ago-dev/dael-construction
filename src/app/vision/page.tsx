@@ -5,6 +5,7 @@ import IntroCard from '@/components/IntroCard/IntroCard';
 import DescriptiveCard from '@/components/DescriptiveCard/DescriptiveCard';
 import ContactSection from '@/components/ContactSection/ContactSection';
 import styles from './page.module.scss';
+import ObjectivesSection from '@/components/ObjectivesSection/ObjectivesSection';
 
 export default function VisionPage() {
   const sustainabilityItems = [
@@ -73,6 +74,7 @@ export default function VisionPage() {
           introText="Dael Construction angazhohet për ruajtjen e mjedisit dhe ndërtimin e komuniteteve të shëndetshme."
         />
         
+        <ObjectivesSection />
         <ContactSection />
       </main>
       

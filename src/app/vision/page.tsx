@@ -75,7 +75,6 @@ export default function VisionPage() {
         />
         
         <ObjectivesSection />
-        <ContactSection />
       </main>
       
       <Footer />

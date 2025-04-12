@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import { useState } from 'react';
 import styles from './ContactSection.module.scss';
 import Image from 'next/image';
@@ -11,7 +12,11 @@ interface FormErrors {
   message?: string;
 }
 
-const ContactSection = () => {
+interface ContactSectionProps {
+  hideTitle?: boolean;
+}
+
+const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -134,8 +139,12 @@ const ContactSection = () => {
       <div className={styles.contentContainer}>
         <div className={styles.contactContent}>
           <div className={styles.formContainer}>
-            <h2>Kontakto</h2>
-            <p>Për më shumë detaje, mos ngurroni të na kontaktoni.</p>
+            {!hideTitle && (
+              <>
+                <h2>Kontakto</h2>
+                <p>Për më shumë detaje, mos ngurroni të na kontaktoni.</p>
+              </>
+            )}
             
             <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
               <div className={styles.inputContainer}>

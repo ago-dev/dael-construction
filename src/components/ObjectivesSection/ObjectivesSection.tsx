@@ -7,16 +7,19 @@ const ObjectivesSection = () => {
   const objectives = [
     {
       image: "/images/pages/vision/vision-image-4.png",
+      icon: "/images/icons/about-icon.svg",
       title: "Zgjerimi i Portofolit",
       description: "Krijimi i rezidencave premium dhe projekteve të integruara me shërbime të shumëllojshme."
     },
     {
       image: "/images/pages/vision/vision-image-5.png",
+      icon: "/images/icons/about-icon.svg",
       title: "Bashkëpunime Strategjike",
       description: "Zhvillimi dhe zgjerimi i rrjetit të partnerëve, qoftë atyre vendorë apo ndërkombëtarë."
     },
     {
       image: "/images/pages/vision/vision-image-6.png",
+      icon: "/images/icons/about-icon.svg",
       title: "Edukimi i Tregut",
       description: "Të informojmë rreth rëndësisë së cilësisë në ndërtim dhe avantazheve të teknologjive bashkëkohore."
     }
@@ -47,8 +50,16 @@ const ObjectivesSection = () => {
               </div>
               <div className={styles.objectiveContent}>
                 <div className={styles.itemHeader}>
+                  <div className={styles.iconContainer}>
+                    <Image
+                      src={objective.icon}
+                      alt={`${objective.title} icon`}
+                      width={20}
+                      height={20}
+                      className={styles.icon}
+                    />
+                  </div>
                   <h3>{objective.title}</h3>
-                  <span className={styles.headerLine}></span>
                 </div>
                 <p>{objective.description}</p>
               </div>

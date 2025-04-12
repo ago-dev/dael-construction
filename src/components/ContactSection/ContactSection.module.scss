@@ -6,7 +6,7 @@
   width: 100%;
   background-color: vars.$white;
   padding: 80px 0;
-  border-top: 1px solid #E3E3E3;
+  border: none;
 
   @include mix.mobile {
     padding: 40px 0;

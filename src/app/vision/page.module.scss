@@ -37,8 +37,7 @@
   gap: 64px;
   
   @include mix.mobile {
-    padding-left: 5%;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
 
@@ -64,6 +63,12 @@
   gap: 24px;
   margin-left: 100px;
   margin-top: 50px;
+
+  @include mix.mobile {
+    width: 90%;
+    margin: 30px auto 0 auto;
+  }
+
   p {
     font-family: 'Geist', var(--font-geist-sans);
     font-weight: 400;

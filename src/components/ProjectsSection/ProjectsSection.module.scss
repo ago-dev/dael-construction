@@ -97,6 +97,7 @@
 
 .mobileProjectsButton {
   display: none;
+  text-decoration: none;
   
   @include mix.mobile {
     display: flex;

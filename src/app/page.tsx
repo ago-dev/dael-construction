@@ -5,10 +5,12 @@ import VisionSection from "@/components/VisionSection/VisionSection";
 import ProjectsSection from "@/components/ProjectsSection/ProjectsSection";
 import ContactSection from "@/components/ContactSection/ContactSection";
 import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <Header />
       <main>
         <HeroSection />
         <AboutSection />

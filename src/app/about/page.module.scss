@@ -87,6 +87,10 @@
   padding-top: 80px;
   padding-bottom: 80px;
   background-color: vars.$white;
+
+  @include mix.mobile {
+    padding-top: 40px;
+  }
 }
 
 .container {
@@ -103,7 +107,7 @@
   padding-left: 6%; // Match the left position of the title
   
   @include mix.mobile {
-    padding-left: 5%; // Match mobile adjustment
+    padding-left: 0%; // Match mobile adjustment
   }
   
   p {

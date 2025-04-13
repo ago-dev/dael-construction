@@ -28,18 +28,18 @@ export default function AboutPage() {
   const distinctiveItems = [
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Inxhinierë & Arkitektë të Specializuar',
-      description: 'Një skuadër me ekspertë të fushës, që kombinojnë dijen teknike me një qasje vizionare.'
+      title: 'Cilësia e Materialeve & Punimeve',
+      description: 'Zgjedhim me kujdes furnitorët më të mirë dhe investojmë në teknologji bashkëkohore për çdo projekt.'
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Profesionalizëm & Përkushtim',
-      description: "Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë."
+      title: 'Fokus te Komuniteti',
+      description: "Ne projektojmë hapësira që i shërbejnë jo vetëm banorëve, por edhe komunitetit më të gjerë përreth."
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Përvojë 15+ Vjeçare',
-      description: 'Një gamë e gjerë projektesh në portofol na lejon të kuptojmë më mirë nevojat e tregut dhe klientëve.'
+      title: 'Zhvillim i Qëndrueshëm',
+      description: 'Aplikojmë praktikat më të reja të efiçencës energjetike dhe minimizimit të ndikimit në mjedis.'
     }
   ];
 
@@ -51,7 +51,7 @@ export default function AboutPage() {
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Transaparenca',
+      title: 'Transparenca',
       description: 'Ndajmë me klientët çdo hap të procesit, duke vendosur një bazë të fortë bashkëpunimi.'
     },
     {

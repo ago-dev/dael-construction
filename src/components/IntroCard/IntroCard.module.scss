@@ -9,7 +9,7 @@
   overflow: hidden;
   
   @include mix.mobile {
-    height: 300px;
+    height: 80vh;
   }
 }
 
@@ -17,6 +17,10 @@
   object-fit: cover;
   object-position: center;
   z-index: 1;
+
+  @include mix.mobile {
+    object-position: left;
+  }
 }
 
 .heroContentWrapper {
@@ -29,12 +33,22 @@
   display: flex;
   justify-content: center;
   height: 160px;
+  
+  @include mix.tablet {
+    width: 50%;
+    left: 5%;
+  }
+  
+  @include mix.mobile {
+    width: 97%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .heroContent {
   width: 78.5%; // 628px / 1512px ≈ 41.5%
   max-width: 628px;
-  min-width: 320px;
   margin-top: 60px;
   padding-bottom: 24px;
   
@@ -59,12 +73,11 @@
   }
   
   @include mix.mobile {
-    width: 90%;
+    width: 80%;
     padding-bottom: 16px;
     
     h2 {
       font-size: 36px;
-      margin-top: 16px;
     }
   }
 }

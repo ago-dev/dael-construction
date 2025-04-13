@@ -61,7 +61,6 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${baiJamjuree.variable} ${spaceGrotesk.variable} ${haskoy.variable}`}>
       <body>
         <ThemeProvider>
-          <Header />
           {children}
         </ThemeProvider>
       </body>

@@ -109,9 +109,8 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
   z-index: 1001; // Higher than overlay
-  
+  margin-top: 2px;
   @include mix.mobile {
     display: block;
   }

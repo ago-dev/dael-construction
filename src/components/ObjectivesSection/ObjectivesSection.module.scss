@@ -7,6 +7,12 @@
   display: flex;
   justify-content: center;
   background-color: #fff;
+
+  @include mix.mobile {
+    padding: 50px 0;
+    width: 90%;
+    margin: 0 auto;
+  }
 }
 
 .contentContainer {
@@ -22,6 +28,10 @@
   margin-bottom: 4rem;
   width: 100%;
 
+  @include mix.mobile {
+    margin-bottom: 40px;
+  }
+
   h2 {
     font-family: Bai Jamjuree;
     font-weight: 600;
@@ -30,7 +40,13 @@
     letter-spacing: 0%;
     text-align: start;
     padding-top: 0;
+
+    @include mix.mobile {
+      font-size: 32px;
+    }
   }
+
+
 }
 
 .brandContainer {
@@ -38,6 +54,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 15px;
+
 }
 
 .brandText {
@@ -58,13 +75,12 @@
   gap: 2rem;
   margin: 0 auto;
 
-  @media (max-width: 1024px) {
+  @include mix.tablet {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 768px) {
+  @include mix.mobile {
     grid-template-columns: 1fr;
-    width: 90%;
   }
 }
 
@@ -74,6 +90,10 @@
   background-color: #fff;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  @include mix.mobile {
+    margin-bottom: 30px;
+  }
 }
 
 .imageContainer {

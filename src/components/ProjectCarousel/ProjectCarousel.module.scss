@@ -1,0 +1,77 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
+.carouselContainer {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  margin-top: 97px; // Height of the header
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carouselSlide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  
+  &.active {
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+.carouselImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.prevButton {
+  left: 20px;
+}
+
+.nextButton {
+  right: 20px;
+}
+
+@include mix.mobile {
+  .carouselContainer {
+    height: 50vh;
+  }
+  
+  .carouselButton {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .prevButton {
+    left: 10px;
+  }
+  
+  .nextButton {
+    right: 10px;
+  }
+} 

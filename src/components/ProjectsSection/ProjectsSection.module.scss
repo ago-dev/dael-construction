@@ -28,14 +28,18 @@
   }
 }
 
-.mobileButtonContainer {
-  display: none;
+.controlsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  position: relative;
+  right: 0;
+  bottom: -60px;
+  gap: 20px;
   
   @include mix.mobile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    position: static;
     margin-top: vars.$spacing-xl;
   }
 }
@@ -96,18 +100,18 @@
 }
 
 .mobileProjectsButton {
-  display: none;
+  display: flex;
+  max-width: 217px;
+  height: 42px;
+  padding: 12px;
+  @include mix.primary-button;
+  @include mix.flex-center;
+  gap: vars.$spacing-sm;
+  text-align: left;
   text-decoration: none;
   
   @include mix.mobile {
-    display: flex;
-    max-width: 217px;
-    height: 42px;
-    padding: 12px;
-    @include mix.primary-button;
-    @include mix.flex-center;
-    gap: vars.$spacing-sm;
-    text-align: left;
+    // Any mobile-specific adjustments can go here if needed
   }
 }
 
@@ -131,16 +135,12 @@
 }
 
 .navigationButtons {
-  position: relative;
-  right: 0;
-  bottom: -60px;
   display: flex;
   justify-content: flex-end;
   gap: 6px;
   
   @include mix.mobile {
     position: static;
-    bottom: auto;
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './HeroSection.module.scss';
 import Image from 'next/image';
 import { projects } from '@/data/projects';
@@ -37,18 +37,18 @@ const HeroSection = () => {
   };
   
   // Auto-rotate carousel every 5 seconds - DISABLED
-  /* 
+  
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isTransitioning) {
         const nextIndex = (currentProjectIndex + 1) % projects.length;
         goToProject(nextIndex);
       }
-    }, 5000);
+    }, 3000);
     
     return () => clearInterval(interval);
   }, [currentProjectIndex, isTransitioning]);
-  */
+  
 
   const handleScrollToAbout = () => {
     scrollToElement('aboutSection');
@@ -77,7 +77,6 @@ const HeroSection = () => {
             </button>
             <div className={styles.carouselControl}>
               <div className={styles.projectName}>{currentProject.name}</div>
-              <div className={styles.projectYear}>{currentProject.year}</div>
               <div className={styles.carouselNav}>
                 {projects.map((project, index) => (
                   <div 

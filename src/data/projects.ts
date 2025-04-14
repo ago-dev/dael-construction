@@ -20,10 +20,10 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    name: 'PM Residence',
+    name: 'Point Residence',
     year: '2024',
     image: '/images/projects/pm-residence.jpg',
-    alt: 'PM Residence 2024',
+    alt: 'Point Residence',
     thumbnail: '/images/projects/thumbnails/pm-residence.png'
   },
   {
@@ -31,15 +31,15 @@ export const projects: Project[] = [
     name: 'Botanic Residence',
     year: '2024',
     image: '/images/projects/botanic-residence.jpg',
-    alt: 'Botanic Residence 2024',
+    alt: 'Botanic Residence',
     thumbnail: '/images/projects/thumbnails/botanic-residence.png'
   },
   {
     id: 4,
-    name: 'Olive Residence',
+    name: 'Living Park Residence',
     year: '2023',
     image: '/images/projects/olive-residence.jpg',
-    alt: 'Olive Residence 2023',
+    alt: 'Living Park Residence',
     thumbnail: '/images/projects/thumbnails/olive-residence.png'
   }
 ]; 

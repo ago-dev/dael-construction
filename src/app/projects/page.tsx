@@ -36,7 +36,7 @@ const ProjectsPage = () => {
           <div className={styles.itemDescription}>
             <h2>Prime Residence</h2>
             <span className={styles.year}>2024</span>
-            <Link href="/projects/prime-residence" className={styles.projectButton}>
+            <Link href={`/projects/prime-residence`} className={styles.projectButton}>
               SHIKO PROJEKTIN
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"

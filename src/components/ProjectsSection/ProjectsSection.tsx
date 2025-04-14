@@ -114,46 +114,46 @@ const ProjectsSection = () => {
               </div>
             ))}
           </div>
-        </div>
-        
-        <div className={styles.mobileButtonContainer}>
-          <Link href="/projects" className={styles.mobileProjectsButton}>
-            TË GJITHA PROJEKTET
-            <Image 
-              src="/images/icons/tabler-icon-arrow-down-left.svg"
-              alt="Arrow"
-              width={16}
-              height={16}
-              className={styles.buttonIcon}
-            />
-          </Link>
           
-          <div className={styles.navigationButtons}>
-            <button 
-              className={`${styles.navButton} ${!canScrollLeft ? styles.navButtonDisabled : ''}`}
-              onClick={scrollLeft}
-              disabled={!canScrollLeft}
-            >
+          <div className={styles.controlsContainer}>
+            <Link href="/projects" className={styles.mobileProjectsButton}>
+              TË GJITHA PROJEKTET
               <Image 
-                src="/images/icons/arrow-right.svg"
-                alt="Scroll Left"
+                src="/images/icons/tabler-icon-arrow-down-left.svg"
+                alt="Arrow"
                 width={16}
                 height={16}
-                className={styles.leftButtonIcon}
+                className={styles.buttonIcon}
               />
-            </button>
-            <button 
-              className={`${styles.navButton} ${!canScrollRight ? styles.navButtonDisabled : ''}`}
-              onClick={scrollRight}
-              disabled={!canScrollRight}
-            >
-              <Image 
-                src="/images/icons/arrow-right.svg"
-                alt="Scroll Right"
-                width={16}
-                height={16}
-              />
-            </button>
+            </Link>
+            
+            <div className={styles.navigationButtons}>
+              <button 
+                className={`${styles.navButton} ${!canScrollLeft ? styles.navButtonDisabled : ''}`}
+                onClick={scrollLeft}
+                disabled={!canScrollLeft}
+              >
+                <Image 
+                  src="/images/icons/arrow-right.svg"
+                  alt="Scroll Left"
+                  width={16}
+                  height={16}
+                  className={styles.leftButtonIcon}
+                />
+              </button>
+              <button 
+                className={`${styles.navButton} ${!canScrollRight ? styles.navButtonDisabled : ''}`}
+                onClick={scrollRight}
+                disabled={!canScrollRight}
+              >
+                <Image 
+                  src="/images/icons/arrow-right.svg"
+                  alt="Scroll Right"
+                  width={16}
+                  height={16}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>

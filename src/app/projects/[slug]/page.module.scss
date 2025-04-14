@@ -1,0 +1,54 @@
+@use '../../../styles/variables' as vars;
+@use '../../../styles/mixins' as mix;
+
+.projectPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.projectContainer {
+  max-width: 1104px;
+  width: 100%;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  
+  h1 {
+    font-family: 'Bai Jamjuree', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 110%;
+    color: #121212;
+  }
+  
+  .year {
+    font-family: 'Bai Jamjuree', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .description {
+    font-family: var(--font-geist-sans);
+    font-size: 16px;
+    line-height: 160%;
+    color: #333;
+  }
+  
+  @include mix.mobile {
+    margin: 40px auto;
+    width: 90%;
+    
+    h1 {
+      font-size: 32px;
+    }
+  }
+} 

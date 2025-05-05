@@ -26,9 +26,8 @@ type SanityProject = {
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  // Ensure params is fully resolved before accessing properties
-  const resolvedParams = await Promise.resolve(params);
-  const project = await getProject(resolvedParams.slug);
+  // Get the project data using the slug
+  const project = await getProject(params.slug);
   
   if (!project) {
     return {
@@ -73,9 +72,8 @@ const extractGalleryImages = (project: SanityProject): string[] => {
  * 3. This component uses the slug from the URL to fetch the project data.
  */
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  // Ensure params is fully resolved before accessing properties
-  const resolvedParams = await Promise.resolve(params);
-  const project = await getProject(resolvedParams.slug);
+  // Get the project data using the slug
+  const project = await getProject(params.slug);
   
   if (!project) {
     notFound();

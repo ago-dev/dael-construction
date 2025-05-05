@@ -25,7 +25,12 @@ type SanityProject = {
   gallery: Array<{ _key: string; asset: any; alt?: string; caption?: string }>;
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+// Correct type definition for Next.js 15
+type PageParams = {
+  slug: string;
+};
+
+export async function generateMetadata({ params }: { params: PageParams }) {
   // Get the project data using the slug
   const project = await getProject(params.slug);
   
@@ -71,7 +76,12 @@ const extractGalleryImages = (project: SanityProject): string[] => {
  *    the "Generate" button in the slug field in Sanity Studio.
  * 3. This component uses the slug from the URL to fetch the project data.
  */
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+type Props = {
+  params: PageParams;
+  searchParams: Record<string, string | string[]>;
+};
+
+export default async function ProjectPage({ params, searchParams }: Props) {
   // Get the project data using the slug
   const project = await getProject(params.slug);
   

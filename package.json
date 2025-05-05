@@ -3,27 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.87.1",
     "next": "15.2.4",
-    "payload": "^3.32.0",
+    "next-sanity": "^9.10.6",
+    "nodemailer": "^7.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sanity": "^3.87.1",
     "sass": "^1.86.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "nodemon": "^3.1.9",
     "typescript": "^5"
   }
 }

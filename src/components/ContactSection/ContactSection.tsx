@@ -31,6 +31,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
     phone: false,
     message: false
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const validateField = (name: string, value: string): string | undefined => {
     switch (name) {
@@ -87,7 +91,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate all fields before submission
@@ -114,23 +118,56 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
     setErrors(newErrors);
     
     if (!hasErrors) {
-
+      setIsSubmitting(true);
+      setSubmitStatus('idle');
+      setSubmitMessage('');
       
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-      
-      // Reset touched state
-      setTouched({
-        name: false,
-        email: false,
-        phone: false,
-        message: false
-      });
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+          setSubmitStatus('success');
+          setSubmitMessage('Faleminderit! Mesazhi juaj u dërgua me sukses. Do t\'ju kontaktojmë së shpejti.');
+          
+          // Reset form after successful submission
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            message: ''
+          });
+          
+          // Reset touched state
+          setTouched({
+            name: false,
+            email: false,
+            phone: false,
+            message: false
+          });
+        } else {
+          setSubmitStatus('error');
+          if (data.errors) {
+            setErrors(data.errors);
+            setSubmitMessage('Ju lutem korrigjoni gabimet në formular.');
+          } else {
+            setSubmitMessage(data.message || 'Pati një problem me dërgimin e mesazhit. Ju lutemi provoni përsëri.');
+          }
+        }
+      } catch (error) {
+        setSubmitStatus('error');
+        setSubmitMessage('Pati një problem me dërgimin e mesazhit. Ju lutemi provoni përsëri.');
+        console.error('Error submitting form:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -146,84 +183,120 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
               </>
             )}
             
-            <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
-              <div className={styles.inputContainer}>
-                <label htmlFor="name">EMRI JUAJ</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={errors.name && touched.name ? styles.inputError : ''}
-                  required
-                />
-                {errors.name && touched.name && (
-                  <div className={styles.errorMessage}>{errors.name}</div>
-                )}
+            {submitStatus === 'success' ? (
+              <div className={styles.successMessage}>
+                <div className={styles.successIcon}>
+                  <Image 
+                    src="/images/icons/check-circle.svg"
+                    alt="Success"
+                    width={32}
+                    height={32}
+                  />
+                </div>
+                <p>{submitMessage}</p>
+                <button 
+                  className={styles.resetButton}
+                  onClick={() => setSubmitStatus('idle')}
+                >
+                  Dërgo një mesazh tjetër
+                </button>
               </div>
-              
-              <div className={styles.inputContainer}>
-                <label htmlFor="email">EMAIL</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={errors.email && touched.email ? styles.inputError : ''}
-                  required
-                />
-                {errors.email && touched.email && (
-                  <div className={styles.errorMessage}>{errors.email}</div>
+            ) : (
+              <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
+                {submitStatus === 'error' && submitMessage && (
+                  <div className={styles.formError}>
+                    <p>{submitMessage}</p>
+                  </div>
                 )}
-              </div>
-              
-              <div className={styles.inputContainer}>
-                <label htmlFor="phone">NR. I TELEFONIT</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={errors.phone && touched.phone ? styles.inputError : ''}
-                />
-                {errors.phone && touched.phone && (
-                  <div className={styles.errorMessage}>{errors.phone}</div>
-                )}
-              </div>
-              
-              <div className={styles.inputContainer}>
-                <label htmlFor="message">MESAZHI JUAJ</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={errors.message && touched.message ? styles.inputError : ''}
-                  required
-                ></textarea>
-                {errors.message && touched.message && (
-                  <div className={styles.errorMessage}>{errors.message}</div>
-                )}
-              </div>
-              
-              <button type="submit" className={styles.submitButton}>
-                DËRGO MESAZH
-                <Image 
-                  src="/images/icons/tabler-icon-arrow-down-left.svg"
-                  alt="Arrow"
-                  width={16}
-                  height={16}
-                  className={styles.buttonIcon}
-                />
-              </button>
-            </form>
+                
+                <div className={styles.inputContainer}>
+                  <label htmlFor="name">EMRI JUAJ</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={errors.name && touched.name ? styles.inputError : ''}
+                    required
+                    disabled={isSubmitting}
+                  />
+                  {errors.name && touched.name && (
+                    <div className={styles.errorMessage}>{errors.name}</div>
+                  )}
+                </div>
+                
+                <div className={styles.inputContainer}>
+                  <label htmlFor="email">EMAIL</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={errors.email && touched.email ? styles.inputError : ''}
+                    required
+                    disabled={isSubmitting}
+                  />
+                  {errors.email && touched.email && (
+                    <div className={styles.errorMessage}>{errors.email}</div>
+                  )}
+                </div>
+                
+                <div className={styles.inputContainer}>
+                  <label htmlFor="phone">NR. I TELEFONIT</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={errors.phone && touched.phone ? styles.inputError : ''}
+                    disabled={isSubmitting}
+                  />
+                  {errors.phone && touched.phone && (
+                    <div className={styles.errorMessage}>{errors.phone}</div>
+                  )}
+                </div>
+                
+                <div className={styles.inputContainer}>
+                  <label htmlFor="message">MESAZHI JUAJ</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={errors.message && touched.message ? styles.inputError : ''}
+                    required
+                    disabled={isSubmitting}
+                  ></textarea>
+                  {errors.message && touched.message && (
+                    <div className={styles.errorMessage}>{errors.message}</div>
+                  )}
+                </div>
+                
+                <button
+                  type="submit"
+                  className={`${styles.submitButton} ${isSubmitting ? styles.submitting : ''}`}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'DUKE DËRGUAR...' : 'DËRGO MESAZH'}
+                  {!isSubmitting && (
+                    <Image 
+                      src="/images/icons/tabler-icon-arrow-down-left.svg"
+                      alt="Arrow"
+                      width={16}
+                      height={16}
+                      className={styles.buttonIcon}
+                    />
+                  )}
+                </button>
+              </form>
+            )}
           </div>
           
           <div className={styles.mapContainer}>

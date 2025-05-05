@@ -4,39 +4,31 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel';
 import { notFound } from 'next/navigation';
+import { getProject } from '@/lib/sanity.client';
+import { urlFor } from '@/lib/sanity.client';
+import Link from 'next/link';
+import Image from 'next/image';
 
-// This would typically come from a database or API
-const getProjectData = async (slug: string) => {
-  // Mock data - in a real app, fetch this from your API or database
-  const projects = {
-    'prime-residence': {
-      title: 'Prime Residence',
-      year: '2024',
-      description: 'Përshkrimi i detajuar i projektit Prime Residence...',
-      images: [
-        '/images/pages/projects/project-gallery/prime-residence.png',
-        '/images/pages/projects/project-gallery/prime-residence-2.png',
-        '/images/pages/projects/project-gallery/prime-residence-3.png'
-      ]
-    },
-    'point-parking': {
-      title: 'Parking nëntokësor "Point Center"',
-      year: '2024',
-      description: 'Përshkrimi i detajuar i projektit Parking nëntokësor...',
-      images: [
-        '/images/pages/projects/project-gallery/point-parking.png',
-        '/images/pages/projects/project-gallery/point-parking-2.png',
-        '/images/pages/projects/project-gallery/point-parking-3.png'
-      ]
-    }
-  };
-  
-  return projects[slug as keyof typeof projects];
+export const revalidate = 3600; // Revalidate every hour
+
+// Type for Sanity project
+type SanityProject = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  description: string;
+  year: number;
+  ndertuar: number;
+  hapesira: string;
+  apartamente: string;
+  featuredImage: any;
+  gallery: Array<{ _key: string; asset: any; alt?: string; caption?: string }>;
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const resolvedParams = await params;
-  const project = await getProjectData(resolvedParams.slug);
+  // Ensure params is fully resolved before accessing properties
+  const resolvedParams = await Promise.resolve(params);
+  const project = await getProject(resolvedParams.slug);
   
   if (!project) {
     return {
@@ -51,25 +43,86 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
+// Function to extract image URLs from project data
+const extractGalleryImages = (project: SanityProject): string[] => {
+  const images: string[] = [];
+  
+  // Add featured image first if available
+  if (project.featuredImage) {
+    images.push(urlFor(project.featuredImage).width(1200).height(800).url());
+  }
+  
+  // Add gallery images
+  if (project.gallery && project.gallery.length > 0) {
+    project.gallery.forEach(item => {
+      if (item.asset) {
+        images.push(urlFor(item.asset).width(1200).height(800).url());
+      }
+    });
+  }
+  
+  return images;
+};
+
+/**
+ * Note on Slugs:
+ * 
+ * 1. When a project is first created, the slug is auto-generated from the title.
+ * 2. When the title is changed, the slug needs to be manually updated by clicking
+ *    the "Generate" button in the slug field in Sanity Studio.
+ * 3. This component uses the slug from the URL to fetch the project data.
+ */
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const resolvedParams = await params;
-  const project = await getProjectData(resolvedParams.slug);
+  // Ensure params is fully resolved before accessing properties
+  const resolvedParams = await Promise.resolve(params);
+  const project = await getProject(resolvedParams.slug);
   
   if (!project) {
     notFound();
   }
   
+  // Extract gallery images from Sanity project data
+  const galleryImages = extractGalleryImages(project);
+  
   return (
     <div className={styles.projectPage}>
       <Header variant="dark" />
       
-      <ProjectCarousel images={project.images} />
+      <ProjectCarousel images={galleryImages} />
       
       <div className={styles.projectContainer}>
-        <h1>{project.title}</h1>
-        <p className={styles.year}>{project.year}</p>
+        <Link href="/projects" className={styles.backLink}>
+          <Image 
+            src="/images/icons/arrow-left-2.svg"
+            alt="Back"
+            width={16}
+            height={16}
+          />
+          KTHEHU TEK PROJEKTET
+        </Link>
+        
+        <div className={styles.projectHeader}>
+          <h1>{project.title}</h1>
+          
+          <div className={styles.projectStats}>
+            <div className={styles.statItem}>
+              <h3>HAPËSIRA E NDËRTIMIT</h3>
+              <p>{project.hapesira}</p>
+            </div>
+            
+            <div className={styles.statItem}>
+              <h3>APARTAMENTE</h3>
+              <p>{project.apartamente}</p>
+            </div>
+            
+            <div className={styles.statItem}>
+              <h3>NDËRTUAR</h3>
+              <p>{project.ndertuar}</p>
+            </div>
+          </div>
+        </div>
+        
         <p className={styles.description}>{project.description}</p>
-        {/* Add more project details here */}
       </div>
       
       <Footer />

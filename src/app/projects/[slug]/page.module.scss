@@ -20,35 +20,152 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 100px;
+  padding: 0 20px;
   
-  h1 {
-    font-family: 'Bai Jamjuree', sans-serif;
-    font-weight: 600;
-    font-size: 48px;
-    line-height: 110%;
-    color: #121212;
+  @include mix.tablet {
+    padding: 0 30px;
   }
   
-  .year {
-    font-family: 'Bai Jamjuree', sans-serif;
-    font-weight: 500;
-    font-size: 18px;
-    color: #666;
+  @include mix.mobile {
+    margin: 40px auto;
+    padding: 0 16px;
+    gap: 20px;
+  }
+  
+  .backLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-haskoy);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 9%;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #DB4F35;
+    margin-bottom: 40px;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
+  .projectHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 20px;
+    
+    @include mix.tablet {
+      gap: 30px;
+    }
+    
+    @include mix.mobile {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    h1 {
+      flex: 1;
+      font-family: 'Bai Jamjuree', sans-serif;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 110%;
+      color: #121212;
+      
+      @include mix.tablet {
+        font-size: 36px;
+      }
+      
+      @include mix.mobile {
+        font-size: 32px;
+        width: 100%;
+      }
+    }
+    
+    .projectStats {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+      max-width: 500px;
+      justify-content: space-between;
+      
+      @include mix.tablet {
+        min-width: unset;
+        max-width: 100%;
+      }
+      
+      .statItem {
+        
+        h3 {
+          font-family: var(--font-geist-sans);
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 150%;
+          letter-spacing: 4%;
+          text-align: right;
+          color: #737373;
+        }
+        
+        p {
+          font-family: 'Bai Jamjuree', sans-serif;
+          font-weight: 600;
+          font-size: 24px ;
+          color: #121212;
+          text-align: right;
+        }
+      }
+    }
   }
   
   .description {
     font-family: var(--font-geist-sans);
-    font-size: 16px;
-    line-height: 160%;
-    color: #333;
+    font-size: 18px;
+    line-height: 175%;
+    color: #121212;
+    margin-bottom: 60px;
   }
   
   @include mix.mobile {
     margin: 40px auto;
     width: 90%;
     
-    h1 {
-      font-size: 32px;
+    .projectHeader {
+      flex-direction: column;
+      gap: 30px;
+      
+      h1 {
+        font-size: 32px;
+        width: 100%;
+      }
+      
+      .projectStats {
+        width: 100%;
+        min-width: unset;
+        max-width: 100%;
+        flex-direction: column;
+        gap: 24px;
+        
+        .statItem {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          
+          h3 {
+            text-align: left;
+            margin-bottom: 4px;
+          }
+          
+          p {
+            font-size: 24px;
+            text-align: left;
+          }
+        }
+      }
     }
   }
 } 

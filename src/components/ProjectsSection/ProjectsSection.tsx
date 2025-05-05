@@ -3,13 +3,56 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './ProjectsSection.module.scss';
 import Image from 'next/image';
-import { projects } from '@/data/projects';
 import Link from 'next/link';
+import { urlFor } from '@/lib/sanity.client';
+
+// Type for Sanity project
+type SanityProject = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  description?: string;
+  year: number;
+  ndertuar?: number;
+  hapesira?: string;
+  apartamente?: string;
+  featuredImage: any;
+};
+
+const fetchProjects = async (): Promise<SanityProject[]> => {
+  const response = await fetch('/api/projects');
+  if (!response.ok) {
+    throw new Error('Failed to fetch projects');
+  }
+  return response.json();
+};
 
 const ProjectsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [projects, setProjects] = useState<SanityProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch projects
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchProjects();
+        setProjects(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load projects');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
 
   const checkScrollability = () => {
     const container = scrollContainerRef.current;
@@ -40,6 +83,13 @@ const ProjectsSection = () => {
       };
     }
   }, []);
+
+  // Recheck scrollability when projects load
+  useEffect(() => {
+    if (projects.length > 0) {
+      setTimeout(checkScrollability, 100);
+    }
+  }, [projects]);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -84,35 +134,49 @@ const ProjectsSection = () => {
         
         <div className={styles.galleryWrapper}>
           <div className={styles.projectsGallery} ref={scrollContainerRef}>
-            {projects.map((project) => (
-              <div key={project.id} className={styles.projectCard}>
-                <div className={styles.thumbnailContainer}>
-                  <Image 
-                    src={project.thumbnail}
-                    alt={project.alt}
-                    fill
-                    className={styles.projectThumbnail}
-                  />
-                </div>
-                <div className={styles.projectInfo}>
-                  <div className={styles.projectDetails}>
-                    <h3>{project.name}</h3>
-                    <span className={styles.projectYear}>{project.year}</span>
-                  </div>
-                  <div className={styles.projectAction}>
-                    <button className={styles.projectButton}>
+            {isLoading ? (
+              <div className={styles.loadingState}>Duke u ngarkuar projektet...</div>
+            ) : error ? (
+              <div className={styles.errorState}>Nuk u arrit të shfaqen projektet.</div>
+            ) : projects.length === 0 ? (
+              <div className={styles.emptyState}>Nuk ka projekte për të shfaqur.</div>
+            ) : (
+              projects.map((project: SanityProject) => (
+                <div key={project._id} className={styles.projectCard}>
+                  <div className={styles.thumbnailContainer}>
+                    {project.featuredImage ? (
                       <Image 
-                        src="/images/icons/tabler-icon-arrow-down-left.svg"
-                        alt="View Project"
-                        width={16}
-                        height={16}
-                        className={styles.buttonIcon}
+                        src={urlFor(project.featuredImage).width(528).height(384).url()}
+                        alt={project.title}
+                        fill
+                        className={styles.projectThumbnail}
                       />
-                    </button>
+                    ) : (
+                      <div className={styles.noImage}>
+                        <p>Nuk ka imazh</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.projectInfo}>
+                    <div className={styles.projectDetails}>
+                      <h3>{project.title}</h3>
+                      <span className={styles.projectYear}>{project.year}</span>
+                    </div>
+                    <div className={styles.projectAction}>
+                      <Link href={`/projects/${project.slug.current}`} className={styles.projectButton}>
+                        <Image 
+                          src="/images/icons/tabler-icon-arrow-down-left.svg"
+                          alt="View Project"
+                          width={16}
+                          height={16}
+                          className={styles.buttonIcon}
+                        />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
           
           <div className={styles.controlsContainer}>

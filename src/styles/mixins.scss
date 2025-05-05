@@ -68,6 +68,12 @@
   }
 }
 
+@mixin large {
+  @media (max-width: vars.$breakpoint-large) {
+    @content;
+  }
+}
+
 // Common container style
 @mixin content-container {
   width: vars.$container-width;

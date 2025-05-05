@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [], // Check if any domains need to be added
-    // If using remote images, ensure domains are configured
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

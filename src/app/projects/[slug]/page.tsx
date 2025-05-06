@@ -12,17 +12,14 @@ import { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
-interface PageParams {
-  slug: string;
+interface PageProps {
+  params: {
+    slug: string;
+  };
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: PageParams;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const slug = params.slug;
-
   const project = await getProject(slug);
 
   if (!project) {
@@ -56,11 +53,7 @@ function extractGalleryImages(project: any) {
   return images;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: PageParams;
-}) {
+export default async function Page({ params }: PageProps) {
   const slug = params.slug;
   const project = await getProject(slug);
 

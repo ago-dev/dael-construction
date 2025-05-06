@@ -1,7 +1,12 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ejx17wi7' // Fallback to your project ID
+// Ensure required environment variables are set
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+if (!projectId) {
+  throw new Error('Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID')
+}
+
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2023-05-03'
 

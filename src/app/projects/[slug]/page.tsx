@@ -17,16 +17,18 @@ interface PageParams {
   slug: string;
 }
 
-// Define proper Page Props type to match Next.js 15 expectation
-type PageProps = {
-  params: PageParams;
-  searchParams: Record<string, string | string[] | undefined>;
-};
+// Using the standard Next.js types directly
+// Note: Removed our custom PageProps type in favor of the built-in Next.js typing
 
 // Updated metadata generation for Next.js 15
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // Access the slug directly but safely
-  const slug = params.slug;
+export async function generateMetadata({ 
+  params 
+}: {
+  params: Promise<PageParams> | PageParams;
+}): Promise<Metadata> {
+  // Properly await the params
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
   
   // Get the project data using the slug
   const project = await getProject(slug);
@@ -64,9 +66,14 @@ function extractGalleryImages(project: any) {
 }
 
 // Updated page component with correct Next.js 15 typing
-export default async function Page({ params }: PageProps) {
-  // Access the slug directly but safely
-  const slug = params.slug;
+export default async function Page({ 
+  params 
+}: {
+  params: Promise<PageParams> | PageParams;
+}) {
+  // Properly await the params
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
   
   // Get the project data using the slug
   const project = await getProject(slug);

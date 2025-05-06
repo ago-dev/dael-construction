@@ -30,8 +30,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -40,4 +44,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# cursor editor config
 .cursorrules
+
+# vscode
+.vscode

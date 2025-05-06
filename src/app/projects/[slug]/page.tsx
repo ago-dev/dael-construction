@@ -8,6 +8,7 @@ import { getProject } from '@/lib/sanity.client';
 import { urlFor } from '@/lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -25,8 +26,15 @@ type SanityProject = {
   gallery: Array<{ _key: string; asset: any; alt?: string; caption?: string }>;
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  // Get the project data using the slug
+// Define the page props interface to exactly match Next.js 15 expectations
+type Props = {
+  params: {
+    slug: string;
+  };
+};
+
+// Metadata generation
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProject(params.slug);
   
   if (!project) {
@@ -43,7 +51,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 // Function to extract image URLs from project data
-const extractGalleryImages = (project: SanityProject): string[] => {
+function extractGalleryImages(project: SanityProject): string[] {
   const images: string[] = [];
   
   // Add featured image first if available
@@ -61,7 +69,7 @@ const extractGalleryImages = (project: SanityProject): string[] => {
   }
   
   return images;
-};
+}
 
 /**
  * Note on Slugs:
@@ -71,7 +79,9 @@ const extractGalleryImages = (project: SanityProject): string[] => {
  *    the "Generate" button in the slug field in Sanity Studio.
  * 3. This component uses the slug from the URL to fetch the project data.
  */
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+export default async function Page(props: Props) {
+  const { params } = props;
+  
   // Get the project data using the slug
   const project = await getProject(params.slug);
   

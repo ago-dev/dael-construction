@@ -12,13 +12,12 @@ import { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+// Using correct Next.js 15 typings that treat params as a Promise
+export async function generateMetadata({ 
+  params 
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
   const slug = params.slug;
   const project = await getProject(slug);
 
@@ -53,7 +52,12 @@ function extractGalleryImages(project: any) {
   return images;
 }
 
-export default async function Page({ params }: PageProps) {
+// Using correct Next.js 15 typings
+export default async function Page({ 
+  params 
+}: {
+  params: { slug: string }
+}) {
   const slug = params.slug;
   const project = await getProject(slug);
 

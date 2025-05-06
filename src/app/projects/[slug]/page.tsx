@@ -12,29 +12,8 @@ import { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
-// Type for Sanity project
-type SanityProject = {
-  _id: string;
-  title: string;
-  slug: { current: string };
-  description: string;
-  year: number;
-  ndertuar: number;
-  hapesira: string;
-  apartamente: string;
-  featuredImage: any;
-  gallery: Array<{ _key: string; asset: any; alt?: string; caption?: string }>;
-};
-
-// Define the page props interface to exactly match Next.js 15 expectations
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
 // Metadata generation
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }) {
   const project = await getProject(params.slug);
   
   if (!project) {
@@ -50,16 +29,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Function to extract image URLs from project data
-function extractGalleryImages(project: SanityProject): string[] {
-  const images: string[] = [];
+// Function to extract image URLs
+function extractGalleryImages(project) {
+  const images = [];
   
-  // Add featured image first if available
   if (project.featuredImage) {
     images.push(urlFor(project.featuredImage).width(1200).height(800).url());
   }
   
-  // Add gallery images
   if (project.gallery && project.gallery.length > 0) {
     project.gallery.forEach(item => {
       if (item.asset) {
@@ -71,17 +48,8 @@ function extractGalleryImages(project: SanityProject): string[] {
   return images;
 }
 
-/**
- * Note on Slugs:
- * 
- * 1. When a project is first created, the slug is auto-generated from the title.
- * 2. When the title is changed, the slug needs to be manually updated by clicking
- *    the "Generate" button in the slug field in Sanity Studio.
- * 3. This component uses the slug from the URL to fetch the project data.
- */
-export default async function Page(props: Props) {
-  const { params } = props;
-  
+// Page component with minimal type annotations
+export default async function Page({ params }) {
   // Get the project data using the slug
   const project = await getProject(params.slug);
   
@@ -89,7 +57,7 @@ export default async function Page(props: Props) {
     notFound();
   }
   
-  // Extract gallery images from Sanity project data
+  // Extract gallery images
   const galleryImages = extractGalleryImages(project);
   
   return (

@@ -19,7 +19,10 @@ interface PageParams {
 
 // Updated metadata generation
 export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
-  const slug = params.slug;
+  // Use Promise.resolve to properly await the params
+  const { slug } = await Promise.resolve(params);
+  
+  // Get the project data using the slug
   const project = await getProject(slug);
   
   if (!project) {
@@ -56,7 +59,8 @@ function extractGalleryImages(project: any) {
 
 // Updated page component to fix the params issue
 export default async function Page({ params }: { params: PageParams }) {
-  const slug = params.slug;
+  // Use Promise.resolve to properly await the params
+  const { slug } = await Promise.resolve(params);
   
   // Get the project data using the slug
   const project = await getProject(slug);

@@ -1,6 +1,7 @@
 // Google Translate API type declarations
 interface Window {
   googleTranslateElementInit: () => void;
+  _googleTranslateObserver?: MutationObserver;
   google: {
     translate: {
       TranslateElement: {
@@ -9,7 +10,16 @@ interface Window {
           includedLanguages: string;
           autoDisplay: boolean;
           layout?: number;
-        }, elementId: string): void;
+        }, elementId: string): {
+          restore?: () => void;
+          reset?: () => void;
+          clear?: () => void;
+        };
+        getInstance?: () => {
+          restore?: () => void;
+          reset?: () => void;
+          clear?: () => void;
+        };
         // Layout constants
         InlineLayout: {
           HORIZONTAL: number;

@@ -1,0 +1,20 @@
+# Build output
+.next/
+out/
+
+# Cache
+.cache/
+.vercel/
+
+# Editor files
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+
+# Local Netlify folder
+.netlify/
+
+# Cursor files
+.cursorrules 

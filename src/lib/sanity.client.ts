@@ -1,14 +1,15 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
-// Ensure required environment variables are set
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-if (!projectId) {
-  throw new Error('Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID')
-}
+// Use environment variables with fallbacks for build-time safety
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '';
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2023-05-03';
 
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2023-05-03'
+// Create a warning only if in development mode
+if (!projectId && process.env.NODE_ENV === 'development') {
+  console.warn('Warning: Missing environment variable NEXT_PUBLIC_SANITY_PROJECT_ID')
+}
 
 export const client = createClient({
   projectId,
@@ -26,19 +27,24 @@ export function urlFor(source: any) {
 
 // Function to fetch all projects
 export async function getProjects() {
-  return client.fetch(
-    `*[_type == "project"] | order(ndertuar desc) {
-      _id,
-      title,
-      slug,
-      description,
-      "year": ndertuar,
-      featuredImage,
-      hapesira,
-      apartamente,
-      gallery
-    }`
-  )
+  try {
+    return await client.fetch(
+      `*[_type == "project"] | order(ndertuar desc) {
+        _id,
+        title,
+        slug,
+        description,
+        "year": ndertuar,
+        featuredImage,
+        hapesira,
+        apartamente,
+        gallery
+      }`
+    )
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    return []; // Return empty array on error
+  }
 }
 
 // Function to fetch a single project by slug
@@ -48,21 +54,26 @@ export async function getProject(slug: string) {
     return null;
   }
   
-  return client.fetch(
-    `*[_type == "project" && slug.current == $slug][0] {
-      _id,
-      title,
-      slug,
-      description,
-      "year": ndertuar,
-      featuredImage,
-      gallery,
-      hapesira,
-      apartamente,
-      ndertuar
-    }`,
-    { slug }
-  )
+  try {
+    return await client.fetch(
+      `*[_type == "project" && slug.current == $slug][0] {
+        _id,
+        title,
+        slug,
+        description,
+        "year": ndertuar,
+        featuredImage,
+        gallery,
+        hapesira,
+        apartamente,
+        ndertuar
+      }`,
+      { slug }
+    )
+  } catch (error) {
+    console.error(`Error fetching project with slug ${slug}:`, error);
+    return null; // Return null on error
+  }
 }
 
 // Check Sanity studio connection and status

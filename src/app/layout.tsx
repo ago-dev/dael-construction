@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Bai_Jamjuree } from "next/font/google";
 import { Space_Grotesk } from "next/font/google";
 import "../styles/globals.scss";
@@ -7,13 +6,16 @@ import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/context/ThemeContext";
 import localFont from 'next/font/local'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Replace Geist with Inter, which is widely available
+import { Inter, Roboto_Mono } from "next/font/google";
+
+const inter = Inter({
+  variable: "--font-geist-sans", // Keep the same variable name for compatibility
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const robotoMono = Roboto_Mono({
+  variable: "--font-geist-mono", // Keep the same variable name for compatibility
   subsets: ["latin"],
 });
 
@@ -58,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${baiJamjuree.variable} ${spaceGrotesk.variable} ${haskoy.variable}`}>
+    <html lang="en" className={`${inter.variable} ${robotoMono.variable} ${baiJamjuree.variable} ${spaceGrotesk.variable} ${haskoy.variable}`}>
       <body>
         <ThemeProvider>
           {children}

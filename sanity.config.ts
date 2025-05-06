@@ -3,13 +3,14 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemas'
 
-// Ensure environment variables are set
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-if (!projectId) {
-  throw new Error('Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID')
-}
+// Use environment variables with fallbacks for build-time safety
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'missing-project-id';
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
+// Show warning instead of throwing error
+if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID && typeof window !== 'undefined') {
+  console.warn('Warning: Missing environment variable NEXT_PUBLIC_SANITY_PROJECT_ID');
+}
 
 export default defineConfig({
   name: 'dael-construction',

@@ -12,9 +12,15 @@ import { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
-// Metadata generation
-export async function generateMetadata({ params }) {
-  const project = await getProject(params.slug);
+// Fix param handling for Next.js 15
+interface PageParams {
+  slug: string;
+}
+
+// Updated metadata generation
+export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+  const slug = params.slug;
+  const project = await getProject(slug);
   
   if (!project) {
     return {
@@ -30,7 +36,7 @@ export async function generateMetadata({ params }) {
 }
 
 // Function to extract image URLs
-function extractGalleryImages(project) {
+function extractGalleryImages(project: any) {
   const images = [];
   
   if (project.featuredImage) {
@@ -38,7 +44,7 @@ function extractGalleryImages(project) {
   }
   
   if (project.gallery && project.gallery.length > 0) {
-    project.gallery.forEach(item => {
+    project.gallery.forEach((item: any) => {
       if (item.asset) {
         images.push(urlFor(item.asset).width(1200).height(800).url());
       }
@@ -48,10 +54,12 @@ function extractGalleryImages(project) {
   return images;
 }
 
-// Page component with minimal type annotations
-export default async function Page({ params }) {
+// Updated page component to fix the params issue
+export default async function Page({ params }: { params: PageParams }) {
+  const slug = params.slug;
+  
   // Get the project data using the slug
-  const project = await getProject(params.slug);
+  const project = await getProject(slug);
   
   if (!project) {
     notFound();

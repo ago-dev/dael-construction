@@ -17,10 +17,16 @@ interface PageParams {
   slug: string;
 }
 
-// Updated metadata generation
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
-  // Use Promise.resolve to properly await the params
-  const { slug } = await Promise.resolve(params);
+// Define proper Page Props type to match Next.js 15 expectation
+type PageProps = {
+  params: PageParams;
+  searchParams: Record<string, string | string[] | undefined>;
+};
+
+// Updated metadata generation for Next.js 15
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  // Access the slug directly but safely
+  const slug = params.slug;
   
   // Get the project data using the slug
   const project = await getProject(slug);
@@ -57,10 +63,10 @@ function extractGalleryImages(project: any) {
   return images;
 }
 
-// Updated page component to fix the params issue
-export default async function Page({ params }: { params: PageParams }) {
-  // Use Promise.resolve to properly await the params
-  const { slug } = await Promise.resolve(params);
+// Updated page component with correct Next.js 15 typing
+export default async function Page({ params }: PageProps) {
+  // Access the slug directly but safely
+  const slug = params.slug;
   
   // Get the project data using the slug
   const project = await getProject(slug);

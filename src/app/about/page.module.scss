@@ -105,6 +105,8 @@
   justify-content: flex-start;
   width: 100%;
   padding-left: 6%; // Match the left position of the title
+  font-family: var(--font-geist-sans);
+  
   
   @include mix.mobile {
     padding-left: 0%; // Match mobile adjustment
@@ -114,10 +116,12 @@
     max-width: 730px;
     font-family: var(--font-geist-sans);
     font-size: 18px;
-    line-height: 175%;
+    line-height: 190%;
+    letter-spacing: 0%;
     letter-spacing: 0%;
     text-align: justify;
     color: vars.$text-medium;
+    margin-bottom: 40px;
     
     @include mix.mobile {
       font-size: 16px;

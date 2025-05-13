@@ -643,7 +643,7 @@ const Header = ({ variant = 'light' }: HeaderProps) => {
               <li><Link href="/vision">Vizioni ynë</Link></li>
               <li><Link href="/projects">Projekte</Link></li>
               <li><Link href="/contact">Kontakto</Link></li>
-              <li className={styles.langSelector}>
+           {/*}  <li className={styles.langSelector}>
                 <button 
                   onClick={handleLangToggle}
                   className={styles.langButton}
@@ -700,7 +700,7 @@ const Header = ({ variant = 'light' }: HeaderProps) => {
                     </li>
                   </ul>
                 )}
-              </li>
+              </li> */}
             </ul>
           </nav>
         )}
@@ -730,7 +730,7 @@ const Header = ({ variant = 'light' }: HeaderProps) => {
           <li><Link href="/contact" onClick={handleMenuToggle}>Kontakto</Link></li>
         </ul>
         
-        <div className={styles.mobileLangSelector}>
+        {/* <div className={styles.mobileLangSelector}>
           <button 
             className={styles.mobileLangButton}
             onClick={handleMobileLangToggle}
@@ -786,7 +786,7 @@ const Header = ({ variant = 'light' }: HeaderProps) => {
               </li>
             </ul>
           )}
-        </div>
+        </div> */}
       </div>
     </header>
   );

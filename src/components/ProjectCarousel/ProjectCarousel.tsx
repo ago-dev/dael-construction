@@ -31,12 +31,17 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images }) => {
             key={index} 
             className={`${styles.carouselSlide} ${index === currentIndex ? styles.active : ''}`}
           >
-            <Image
+            <img
               src={image}
               alt={`Project image ${index + 1}`}
-              fill
-              priority={index === currentIndex}
               className={styles.carouselImage}
+              loading={index === currentIndex ? 'eager' : 'lazy'}
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                objectPosition: 'center'
+              }}
             />
           </div>
         ))}

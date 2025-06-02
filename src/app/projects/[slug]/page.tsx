@@ -5,9 +5,10 @@ import Footer from '@/components/Footer/Footer';
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel';
 import { notFound } from 'next/navigation';
 import { getProject } from '@/lib/sanity.client';
-import { urlFor, urlForHighQuality } from '@/lib/sanity.client';
+import { urlFor, urlForHighQuality, urlForOriginal, urlForPurePNG } from '@/lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
+import OriginalImage from '@/components/OriginalImage/OriginalImage';
 import { Metadata } from 'next';
 
 // Set to dynamic to prevent static generation
@@ -48,7 +49,8 @@ function extractGalleryImages(project: any) {
 
   if (project.featuredImage) {
     try {
-      images.push(urlForHighQuality(project.featuredImage).width(1200).height(800).url());
+      // Use pure PNG to force PNG format without any WebP conversion
+      images.push(urlForPurePNG(project.featuredImage).url());
     } catch (e) {
       console.error('Error processing featured image:', e);
     }
@@ -58,7 +60,8 @@ function extractGalleryImages(project: any) {
     project.gallery.forEach((item: any) => {
       if (item.asset) {
         try {
-          images.push(urlForHighQuality(item.asset).width(1200).height(800).url());
+          // Use pure PNG to force PNG format without any WebP conversion
+          images.push(urlForPurePNG(item.asset).url());
         } catch (e) {
           console.error('Error processing gallery image:', e);
         }

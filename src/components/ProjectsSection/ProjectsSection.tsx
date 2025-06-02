@@ -150,6 +150,7 @@ const ProjectsSection = () => {
                         alt={project.title}
                         fill
                         className={styles.projectThumbnail}
+                        quality={100}
                       />
                     ) : (
                       <div className={styles.noImage}>

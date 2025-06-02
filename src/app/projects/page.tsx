@@ -57,6 +57,7 @@ const ProjectsPage = async () => {
                       height={384}
                       style={{ width: '100%', height: 'auto' }}
                       priority
+                      quality={100}
                     />
                   ) : (
                     <div className={styles.noImage}>

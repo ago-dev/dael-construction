@@ -46,6 +46,32 @@ export function urlForResponsive(source: any, width: number, height?: number) {
   return height ? imageBuilder.height(height) : imageBuilder;
 }
 
+// Function to force PNG and prevent any WebP conversion
+export function urlForPurePNG(source: any, width?: number, height?: number) {
+  let imageBuilder = builder.image(source)
+    .format('png')
+    .quality(100);
+  
+  if (width) imageBuilder = imageBuilder.width(width);
+  if (height) imageBuilder = imageBuilder.height(height);
+  
+  return imageBuilder;
+}
+
+// Function to get the raw asset URL without any processing
+export function urlForRawAsset(source: any) {
+  // Get the raw asset reference and construct direct URL
+  if (source?.asset?._ref) {
+    const ref = source.asset._ref;
+    const [, , dimensions] = ref.split('-');
+    const [width, height] = dimensions.split('x');
+    
+    // Return direct asset URL
+    return `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ejx17wi7'}/production/${ref.replace('image-', '').replace(`-${dimensions}`, '')}-${dimensions}.png`;
+  }
+  return builder.image(source).url();
+}
+
 // Function to fetch all projects
 export async function getProjects() {
   try {

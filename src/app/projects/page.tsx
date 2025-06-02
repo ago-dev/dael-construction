@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer/Footer';
 import { getProjects } from '@/lib/sanity.client';
-import { urlFor, urlForHighQuality } from '@/lib/sanity.client';
+import { urlFor, urlForHighQuality, urlForThumbnail } from '@/lib/sanity.client';
 
 // Set to dynamic to prevent static generation
 export const dynamic = 'force-dynamic';
@@ -51,7 +51,7 @@ const ProjectsPage = async () => {
                 <div className={styles.projectImage}>
                   {project.featuredImage ? (
                     <Image 
-                      src={urlForHighQuality(project.featuredImage).width(528).height(384).url()}
+                      src={urlForThumbnail(project.featuredImage).url()}
                       alt={project.title}
                       width={528}
                       height={384}

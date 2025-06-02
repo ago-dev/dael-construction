@@ -58,6 +58,58 @@ export function urlForPurePNG(source: any, width?: number, height?: number) {
   return imageBuilder;
 }
 
+// Performance-optimized image functions
+export function urlForThumbnail(source: any) {
+  return builder.image(source)
+    .format('png')
+    .quality(85)
+    .width(400)
+    .height(300);
+}
+
+export function urlForMediumQuality(source: any, width: number = 800, height?: number) {
+  let imageBuilder = builder.image(source)
+    .format('png')
+    .quality(90)
+    .width(width);
+  
+  if (height) imageBuilder = imageBuilder.height(height);
+  return imageBuilder;
+}
+
+export function urlForGalleryPreview(source: any) {
+  return builder.image(source)
+    .format('png')
+    .quality(85)
+    .width(1200)
+    .height(800);
+}
+
+export function urlForFullscreen(source: any) {
+  return builder.image(source)
+    .format('png')
+    .quality(95)
+    .width(1920)
+    .height(1080);
+}
+
+// Smart responsive image function
+export function urlForResponsiveOptimized(source: any, size: 'small' | 'medium' | 'large' | 'xl') {
+  const configs = {
+    small: { width: 400, height: 300, quality: 80 },
+    medium: { width: 800, height: 600, quality: 85 },
+    large: { width: 1200, height: 800, quality: 90 },
+    xl: { width: 1920, height: 1080, quality: 95 }
+  };
+  
+  const config = configs[size];
+  return builder.image(source)
+    .format('png')
+    .quality(config.quality)
+    .width(config.width)
+    .height(config.height);
+}
+
 // Function to get the raw asset URL without any processing
 export function urlForRawAsset(source: any) {
   // Get the raw asset reference and construct direct URL
@@ -75,7 +127,7 @@ export function urlForRawAsset(source: any) {
 // Function to fetch all projects
 export async function getProjects() {
   try {
-    return await client.fetch(
+    const result = await client.fetch(
       `*[_type == "project"] | order(ndertuar desc) {
         _id,
         title,
@@ -87,10 +139,26 @@ export async function getProjects() {
         apartamente,
         gallery
       }`
-    )
+    );
+    
+    return result || [];
   } catch (error) {
     console.error('Error fetching projects:', error);
-    return []; // Return empty array on error
+    
+    // Additional error details
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+    }
+    
+    // Try a simpler query as fallback
+    try {
+      console.log('Attempting fallback projects query...');
+      const fallbackResult = await client.fetch(`*[_type == "project"]`);
+      return fallbackResult || [];
+    } catch (fallbackError) {
+      console.error('Fallback projects query failed:', fallbackError);
+      return []; // Return empty array on error
+    }
   }
 }
 
@@ -102,7 +170,7 @@ export async function getProject(slug: string) {
   }
   
   try {
-    return await client.fetch(
+    const result = await client.fetch(
       `*[_type == "project" && slug.current == $slug][0] {
         _id,
         title,
@@ -116,10 +184,30 @@ export async function getProject(slug: string) {
         ndertuar
       }`,
       { slug }
-    )
+    );
+    
+    return result;
   } catch (error) {
     console.error(`Error fetching project with slug ${slug}:`, error);
-    return null; // Return null on error
+    
+    // Additional error details for debugging
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    
+    // Try a simpler query as fallback
+    try {
+      console.log('Attempting fallback query...');
+      const fallbackResult = await client.fetch(
+        `*[_type == "project" && slug.current == $slug][0]`,
+        { slug }
+      );
+      return fallbackResult;
+    } catch (fallbackError) {
+      console.error('Fallback query also failed:', fallbackError);
+      return null;
+    }
   }
 }
 
@@ -127,19 +215,25 @@ export async function getProject(slug: string) {
 export async function checkSanityStatus() {
   try {
     // Try to fetch one project to see if we have a valid connection
-    const testQuery = await client.fetch(`*[_type == "project"][0] { _id }`)
+    const testQuery = await client.fetch(`*[_type == "project"][0] { _id }`);
     
     // Return connection status
     return {
       connected: true,
       projectCount: await client.fetch(`count(*[_type == "project"])`)
-    }
+    };
   } catch (error) {
-    console.error('Error connecting to Sanity:', error)
+    console.error('Error connecting to Sanity:', error);
+    
+    // Additional error details
+    if (error instanceof Error) {
+      console.error('Sanity connection error message:', error.message);
+    }
+    
     return {
       connected: false,
       projectCount: 0,
       error: error instanceof Error ? error.message : 'Unknown error'
-    }
+    };
   }
 } 

@@ -5,7 +5,7 @@ import Footer from '@/components/Footer/Footer';
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel';
 import { notFound } from 'next/navigation';
 import { getProject } from '@/lib/sanity.client';
-import { urlFor, urlForHighQuality, urlForOriginal, urlForPurePNG } from '@/lib/sanity.client';
+import { urlFor, urlForHighQuality, urlForOriginal, urlForPurePNG, urlForGalleryPreview } from '@/lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
 import OriginalImage from '@/components/OriginalImage/OriginalImage';
@@ -15,13 +15,13 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Revalidate every hour
 
-type Params = {
+type Params = Promise<{
   slug: string;
-};
+}>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const project = await getProject(slug);
 
     if (!project) {
@@ -49,8 +49,8 @@ function extractGalleryImages(project: any) {
 
   if (project.featuredImage) {
     try {
-      // Use pure PNG to force PNG format without any WebP conversion
-      images.push(urlForPurePNG(project.featuredImage).url());
+      // Use gallery preview - PNG format, 90% quality, 1200x800 (good balance)
+      images.push(urlForGalleryPreview(project.featuredImage).url());
     } catch (e) {
       console.error('Error processing featured image:', e);
     }
@@ -60,8 +60,8 @@ function extractGalleryImages(project: any) {
     project.gallery.forEach((item: any) => {
       if (item.asset) {
         try {
-          // Use pure PNG to force PNG format without any WebP conversion
-          images.push(urlForPurePNG(item.asset).url());
+          // Use gallery preview - PNG format, 90% quality, 1200x800 (good balance)
+          images.push(urlForGalleryPreview(item.asset).url());
         } catch (e) {
           console.error('Error processing gallery image:', e);
         }
@@ -74,7 +74,7 @@ function extractGalleryImages(project: any) {
 
 export default async function Page({ params }: { params: Params }) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const project = await getProject(slug);
 
     if (!project) {

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './ProjectsSection.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { urlFor, urlForHighQuality } from '@/lib/sanity.client';
+import { urlFor, urlForHighQuality, urlForThumbnail } from '@/lib/sanity.client';
 
 // Type for Sanity project
 type SanityProject = {
@@ -146,7 +146,7 @@ const ProjectsSection = () => {
                   <div className={styles.thumbnailContainer}>
                     {project.featuredImage ? (
                       <Image 
-                        src={urlForHighQuality(project.featuredImage).width(528).height(384).url()}
+                        src={urlForThumbnail(project.featuredImage).url()}
                         alt={project.title}
                         fill
                         className={styles.projectThumbnail}

@@ -2,26 +2,29 @@
 
 import styles from './ObjectivesSection.module.scss';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ObjectivesSection = () => {
+  const { t } = useLanguage();
+
   const objectives = [
     {
       image: "/images/pages/vision/vision-image-4.png",
       icon: "/images/icons/about-icon.svg",
-      title: "Zgjerimi i Portofolit",
-      description: "Krijimi i rezidencave premium dhe projekteve të integruara me shërbime të shumëllojshme."
+      title: t('vision.objectives.portfolio.title'),
+      description: t('vision.objectives.portfolio.description')
     },
     {
       image: "/images/pages/vision/vision-image-5.png",
       icon: "/images/icons/about-icon.svg",
-      title: "Bashkëpunime Strategjike",
-      description: "Zhvillimi dhe zgjerimi i rrjetit të partnerëve, qoftë atyre vendorë apo ndërkombëtarë."
+      title: t('vision.objectives.partnerships.title'),
+      description: t('vision.objectives.partnerships.description')
     },
     {
       image: "/images/pages/vision/vision-image-6.png",
       icon: "/images/icons/about-icon.svg",
-      title: "Edukimi i Tregut",
-      description: "Të informojmë rreth rëndësisë së cilësisë në ndërtim dhe avantazheve të teknologjive bashkëkohore."
+      title: t('vision.objectives.education.title'),
+      description: t('vision.objectives.education.description')
     }
   ];
 
@@ -33,7 +36,7 @@ const ObjectivesSection = () => {
             <span className={styles.brandText}>DAEL CONSTRUCTION</span>
             <span className={styles.brandLine}></span>
           </div>
-          <h2>Synimet e ardhshme</h2>
+          <h2>{t('vision.objectivesTitle')}</h2>
         </div>
         
         <div className={styles.objectivesGrid}>

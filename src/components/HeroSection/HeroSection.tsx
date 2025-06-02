@@ -5,8 +5,10 @@ import styles from './HeroSection.module.scss';
 import Image from 'next/image';
 import { projects } from '@/data/projects';
 import { scrollToElement } from '@/utils/scrollUtils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [animatingDot, setAnimatingDot] = useState<number | null>(null);
@@ -61,12 +63,11 @@ const HeroSection = () => {
       <div className={styles.contentContainer}>
 
         <div className={styles.content}>
-          <h1>Ne ndërtojmë hapësira që
-          frymëzojnë jetesë moderne.</h1>
-          <p>Me mbi 17 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.</p>
+          <h1>{t('home.hero.title', 'Ne ndërtojmë hapësira që frymëzojnë jetesë moderne.')}</h1>
+          <p>{t('home.hero.description', 'Me mbi 17 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.')}</p>
           <div className={styles.buttonContainer}>
             <button onClick={handleScrollToAbout}>
-              SHIKO MË SHUMË
+              {t('home.hero.button', 'SHIKO MË SHUMË')}
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
                 alt="Arrow"
@@ -100,6 +101,17 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
+        </div>
+        
+        <div className={styles.imageContainer}>
+          <Image
+            src={currentProject.image}
+            alt={currentProject.name}
+            fill
+            className={styles.heroImage}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+          />
         </div>
       </div>
     </section>

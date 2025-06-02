@@ -1,9 +1,13 @@
 "use client";
 
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './ContactSection.module.scss';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface ContactSectionProps {
+  hideTitle?: boolean;
+}
 
 interface FormErrors {
   name?: string;
@@ -12,11 +16,9 @@ interface FormErrors {
   message?: string;
 }
 
-interface ContactSectionProps {
-  hideTitle?: boolean;
-}
-
 const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) => {
+  const { t } = useLanguage();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,19 +41,19 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
   const validateField = (name: string, value: string): string | undefined => {
     switch (name) {
       case 'name':
-        return value.trim() === '' ? 'Ju lutem vendosni emrin tuaj.' : undefined;
+        return value.trim() === '' ? t('contact.validation.nameRequired') : undefined;
       case 'email':
         return value.trim() === '' 
-          ? 'Ju lutem vendosni adresën tuaj të email-it.' 
+          ? t('contact.validation.emailRequired')
           : !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) 
-            ? 'Adresa e email-it nuk është e vlefshme.' 
+            ? t('contact.validation.emailInvalid')
             : undefined;
       case 'phone':
         return value.trim() !== '' && !/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(value)
-          ? 'Ju lutem vendosni një numër telefoni të vlefshëm.'
+          ? t('contact.validation.phoneInvalid')
           : undefined;
       case 'message':
-        return value.trim() === '' ? 'Ju lutem shkruani mesazhin tuaj dhe do t\'ju kontaktojmë sa më shpejt të jetë e mundur.' : undefined;
+        return value.trim() === '' ? t('contact.validation.messageRequired') : undefined;
       default:
         return undefined;
     }
@@ -59,44 +61,34 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Validate on change if the field has been touched
-    if (touched[name as keyof typeof touched]) {
-      const error = validateField(name, value);
-      setErrors(prev => ({
-        ...prev,
-        [name]: error
-      }));
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
     }
   };
-  
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
-    // Mark field as touched
-    setTouched(prev => ({
-      ...prev,
-      [name]: true
-    }));
+    setTouched(prev => ({ ...prev, [name]: true }));
     
-    // Validate on blur
     const error = validateField(name, value);
-    setErrors(prev => ({
-      ...prev,
-      [name]: error
-    }));
+    setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate all fields before submission
+    // Validate all fields
     const newErrors: FormErrors = {};
-    let hasErrors = false;
+    Object.keys(formData).forEach(key => {
+      const error = validateField(key, formData[key as keyof typeof formData]);
+      if (error) {
+        newErrors[key as keyof FormErrors] = error;
+      }
+    });
     
     // Mark all fields as touched
     setTouched({
@@ -106,68 +98,49 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
       message: true
     });
     
-    // Check each field
-    Object.entries(formData).forEach(([key, value]) => {
-      const error = validateField(key, value);
-      if (error) {
-        newErrors[key as keyof FormErrors] = error;
-        hasErrors = true;
-      }
-    });
-    
     setErrors(newErrors);
     
-    if (!hasErrors) {
-      setIsSubmitting(true);
-      setSubmitStatus('idle');
-      setSubmitMessage('');
+    // If there are errors, don't submit
+    if (Object.keys(newErrors).length > 0) {
+      setSubmitStatus('error');
+      setSubmitMessage(t('contact.validation.fixErrors'));
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-        
+      if (response.ok) {
+        setSubmitStatus('success');
+        setSubmitMessage(t('contact.form.successMessage', 'Mesazhi juaj u dërgua me sukses! Do t\'ju kontaktojmë së shpejti.'));
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setTouched({ name: false, email: false, phone: false, message: false });
+        setErrors({});
+      } else {
         const data = await response.json();
-        
-        if (response.ok && data.success) {
-          setSubmitStatus('success');
-          setSubmitMessage('Faleminderit! Mesazhi juaj u dërgua me sukses. Do t\'ju kontaktojmë së shpejti.');
-          
-          // Reset form after successful submission
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            message: ''
-          });
-          
-          // Reset touched state
-          setTouched({
-            name: false,
-            email: false,
-            phone: false,
-            message: false
-          });
-        } else {
-          setSubmitStatus('error');
-          if (data.errors) {
-            setErrors(data.errors);
-            setSubmitMessage('Ju lutem korrigjoni gabimet në formular.');
-          } else {
-            setSubmitMessage(data.message || 'Pati një problem me dërgimin e mesazhit. Ju lutemi provoni përsëri.');
-          }
-        }
-      } catch (error) {
         setSubmitStatus('error');
-        setSubmitMessage('Pati një problem me dërgimin e mesazhit. Ju lutemi provoni përsëri.');
-        console.error('Error submitting form:', error);
-      } finally {
-        setIsSubmitting(false);
+        
+        if (response.status === 400) {
+          setSubmitMessage(t('contact.validation.fixErrors'));
+        } else {
+          setSubmitMessage(data.message || t('contact.validation.submitError'));
+        }
       }
+    } catch (error) {
+      setSubmitStatus('error');
+      setSubmitMessage(t('contact.validation.submitError'));
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -178,8 +151,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
           <div className={styles.formContainer}>
             {!hideTitle && (
               <>
-                <h2>Kontakto</h2>
-                <p>Për më shumë detaje, mos ngurroni të na kontaktoni.</p>
+                <h2>{t('contact.title')}</h2>
+                <p>{t('contact.subtitle')}</p>
               </>
             )}
             
@@ -198,19 +171,19 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                   className={styles.resetButton}
                   onClick={() => setSubmitStatus('idle')}
                 >
-                  Dërgo një mesazh tjetër
+                  {t('common.sendAnotherMessage')}
                 </button>
               </div>
             ) : (
               <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
                 {submitStatus === 'error' && submitMessage && (
                   <div className={styles.formError}>
-                    <p>{submitMessage}</p>
+                    {submitMessage}
                   </div>
                 )}
                 
                 <div className={styles.inputContainer}>
-                  <label htmlFor="name">EMRI JUAJ</label>
+                  <label htmlFor="name">{t('contact.form.name')}</label>
                   <input
                     type="text"
                     id="name"
@@ -228,7 +201,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                 </div>
                 
                 <div className={styles.inputContainer}>
-                  <label htmlFor="email">EMAIL</label>
+                  <label htmlFor="email">{t('contact.form.email')}</label>
                   <input
                     type="email"
                     id="email"
@@ -246,7 +219,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                 </div>
                 
                 <div className={styles.inputContainer}>
-                  <label htmlFor="phone">NR. I TELEFONIT</label>
+                  <label htmlFor="phone">{t('contact.form.phone')}</label>
                   <input
                     type="tel"
                     id="phone"
@@ -263,7 +236,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                 </div>
                 
                 <div className={styles.inputContainer}>
-                  <label htmlFor="message">MESAZHI JUAJ</label>
+                  <label htmlFor="message">{t('contact.form.message')}</label>
                   <textarea
                     id="message"
                     name="message"
@@ -271,29 +244,21 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className={errors.message && touched.message ? styles.inputError : ''}
+                    rows={4}
                     required
                     disabled={isSubmitting}
-                  ></textarea>
+                  />
                   {errors.message && touched.message && (
                     <div className={styles.errorMessage}>{errors.message}</div>
                   )}
                 </div>
                 
-                <button
-                  type="submit"
-                  className={`${styles.submitButton} ${isSubmitting ? styles.submitting : ''}`}
+                <button 
+                  type="submit" 
+                  className={styles.submitButton}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'DUKE DËRGUAR...' : 'DËRGO MESAZH'}
-                  {!isSubmitting && (
-                    <Image 
-                      src="/images/icons/tabler-icon-arrow-down-left.svg"
-                      alt="Arrow"
-                      width={16}
-                      height={16}
-                      className={styles.buttonIcon}
-                    />
-                  )}
+                  {isSubmitting ? t('contact.form.sending') : t('contact.form.submit')}
                 </button>
               </form>
             )}

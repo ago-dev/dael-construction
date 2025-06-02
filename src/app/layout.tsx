@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 import "../styles/globals.scss";
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import localFont from 'next/font/local'
 
 // Replace Geist with Inter, which is widely available
@@ -62,9 +63,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${robotoMono.variable} ${baiJamjuree.variable} ${spaceGrotesk.variable} ${haskoy.variable}`}>
       <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

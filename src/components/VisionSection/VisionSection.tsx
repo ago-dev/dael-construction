@@ -3,8 +3,11 @@
 import styles from './VisionSection.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const VisionSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className={styles.visionSection}>
       <div className={styles.imageContainer}>
@@ -21,7 +24,7 @@ const VisionSection = () => {
         <div className={styles.content}>
           <div className={styles.visionDiv}>
             <div className={styles.brandContainer}>
-              <span className={styles.brandText}>VIZIONI YNË</span>
+              <span className={styles.brandText}>{t('home.vision.title')}</span>
               <Image 
                 src="/images/assets/line-2.svg"
                 alt="Line"
@@ -30,10 +33,10 @@ const VisionSection = () => {
                 className={styles.brandLine}
               />
             </div>
-            <h2>Ne fokusohemi në krijimin<br />e hapësirave dinamike.</h2>
+            <h2>{t('home.vision.headline')}</h2>
             
             <Link href="/vision" className={styles.visionButton}>
-              VIZIONI YNË
+              {t('home.vision.button')}
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
                 alt="Arrow"
@@ -54,9 +57,9 @@ const VisionSection = () => {
                   height={24}
                   className={styles.visionIcon}
                 />
-                <h3>Cilësia</h3>
+                <h3>{t('home.vision.quality.title')}</h3>
               </div>
-              <p>Zgjedhim materialet më të mira dhe zbatojmë teknologjitë më të reja për të garantuar rezistencë, komoditet dhe efikasitet energjetik.</p>
+              <p>{t('home.vision.quality.description')}</p>
             </div>
             
             <div className={styles.visionItem}>
@@ -68,9 +71,9 @@ const VisionSection = () => {
                   height={24}
                   className={styles.visionIcon}
                 />
-                <h3>Besimi</h3>
+                <h3>{t('home.vision.trust.title')}</h3>
               </div>
-              <p>Punojmë me transparencë dhe profesionalizëm, duke ruajtur një komunikim të vazhdueshëm me klientët tanë në çdo hap të projektit.</p>
+              <p>{t('home.vision.trust.description')}</p>
             </div>
             
             <div className={styles.visionItem}>
@@ -82,9 +85,9 @@ const VisionSection = () => {
                   height={24}
                   className={styles.visionIcon}
                 />
-                <h3>Inovacioni</h3>
+                <h3>{t('home.vision.innovation.title')}</h3>
               </div>
-              <p>Nxisim ide kreative dhe investojmë në zhvillimin e teknologjive të avancuara për të krijuar ndërtesa funksionale dhe me plot hapësira të gjelbra.</p>
+              <p>{t('home.vision.innovation.description')}</p>
             </div>
           </div>
         </div>

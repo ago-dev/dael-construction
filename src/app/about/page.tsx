@@ -1,3 +1,5 @@
+"use client";
+
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import IntroCard from '@/components/IntroCard/IntroCard';
@@ -5,64 +7,67 @@ import DescriptiveCard from '@/components/DescriptiveCard/DescriptiveCard';
 import ValuesComponent from '@/components/ValuesComponent/ValuesComponent';
 import ContactSection from '@/components/ContactSection/ContactSection';
 import styles from './page.module.scss';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   const teamItems = [
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Inxhinierë & Arkitektë të Specializuar',
-      description: 'Një skuadër me ekspertë të fushës, që kombinojnë dijen teknike me një qasje vizionare.'
+      title: t('about.team.engineers.title'),
+      description: t('about.team.engineers.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Profesionalizëm & Përkushtim',
-      description: "Operojmë me ndershmëri dhe transparencë, duke garantuar marrëdhënie afatgjata me klientët dhe partnerët tanë."
+      title: t('about.team.professionalism.title'),
+      description: t('about.team.professionalism.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Përvojë 15+ Vjeçare',
-      description: 'Një gamë e gjerë projektesh në portofol na lejon të kuptojmë më mirë nevojat e tregut dhe klientëve.'
+      title: t('about.team.experience.title'),
+      description: t('about.team.experience.description')
     }
   ];
 
   const distinctiveItems = [
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Cilësia e Materialeve & Punimeve',
-      description: 'Zgjedhim me kujdes furnitorët më të mirë dhe investojmë në teknologji bashkëkohore për çdo projekt.'
+      title: t('about.distinctive.quality.title'),
+      description: t('about.distinctive.quality.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Fokus te Komuniteti',
-      description: "Ne projektojmë hapësira që i shërbejnë jo vetëm banorëve, por edhe komunitetit më të gjerë përreth."
+      title: t('about.distinctive.community.title'),
+      description: t('about.distinctive.community.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Zhvillim i Qëndrueshëm',
-      description: 'Aplikojmë praktikat më të reja të efiçencës energjetike dhe minimizimit të ndikimit në mjedis.'
+      title: t('about.distinctive.development.title'),
+      description: t('about.distinctive.development.description')
     }
   ];
 
   const coreValues = [
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Integriteti',
-      description: 'Mbajmë fjalën tonë, zbatojmë marrëveshjet dhe punojmë me korrektësi.'
+      title: t('about.values.integrity.title'),
+      description: t('about.values.integrity.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Transparenca',
-      description: 'Ndajmë me klientët çdo hap të procesit, duke vendosur një bazë të fortë bashkëpunimi.'
+      title: t('about.values.transparency.title'),
+      description: t('about.values.transparency.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Kujdesi',
-      description: 'Çdo vendim, i vogël apo i madh, merret me përgjegjësi dhe vëmendje maksimale.'
+      title: t('about.values.care.title'),
+      description: t('about.values.care.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Risia',
-      description: 'Ecim me hapin e kohës, duke i paraprirë zhvillimeve teknologjike dhe tregut.'
+      title: t('about.values.innovation.title'),
+      description: t('about.values.innovation.description')
     }
   ];
 
@@ -72,13 +77,13 @@ export default function AboutPage() {
       
       <IntroCard 
         backgroundImage="/images/pages/about/about-background.png"
-        title="Rreth nesh"
+        title={t('about.title')}
       />
       
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.description}>
-            <p><b>Dael Construction</b> ka nisur rrugëtimin e saj në vitin 2008 me qëllimin për t'i sjellë Tiranës një model të ri ndërtimi: kompleks banimi me standarde të larta europiane, dizajn funksional dhe një qasje të qëndrueshme ndaj zhvillimit urban. Qysh prej fillimeve tona, kemi arritur të krijojmë një reputacion solid falë punës së palodhur, inovacionit të vazhdueshëm dhe përkushtimit për t'u sjellë klientëve tanë siguri dhe cilësi.</p>
+            <p><b>Dael Construction</b> {t('about.description')}</p>
           </div>
         </div>
         
@@ -89,7 +94,7 @@ export default function AboutPage() {
           imageOnLeft={true}
           backgroundColor="#1C222B"
           showBrand={true}
-          brandText="EKIPI DHE EKSPERTIZA"
+          brandText={t('about.teamTitle')}
           iconBackgroundColor="#1C222B"
         />
         
@@ -101,7 +106,7 @@ export default function AboutPage() {
           backgroundColor="#FFFFFF"
           textColor="#121212"
           showBrand={true}
-          brandText="ÇFARË NA VEÇON"
+          brandText={t('about.distinctiveTitle')}
           iconBackgroundColor="transparent"
         />
         

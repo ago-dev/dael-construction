@@ -1,10 +1,66 @@
 "use client";
 
+import { useState, useEffect, useRef } from 'react';
 import styles from './AboutSection.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const AnimatedNumber = ({ targetNumber, duration = 2000, startDelay = 0 }: { 
+  targetNumber: number; 
+  duration?: number; 
+  startDelay?: number; 
+}) => {
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+          
+          setTimeout(() => {
+            const startTime = Date.now();
+            const animate = () => {
+              const elapsedTime = Date.now() - startTime;
+              const progress = Math.min(elapsedTime / duration, 1);
+              
+              // Easing function for smooth animation
+              const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+              const animatedValue = Math.round(easeOutQuart * targetNumber);
+              
+              setCurrentNumber(animatedValue);
+              
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            };
+            requestAnimationFrame(animate);
+          }, startDelay);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [targetNumber, duration, startDelay, hasStarted]);
+
+  return (
+    <span ref={elementRef} className={styles.statNumber}>
+      {currentNumber}
+    </span>
+  );
+};
 
 const AboutSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className={styles.aboutSection} id="aboutSection">
       <div className={styles.contentContainer}>
@@ -20,26 +76,26 @@ const AboutSection = () => {
                 className={styles.brandLine}
               />
             </div>
-            <h2>Rreth nesh</h2>
-            <p>Prej vitit 2008, Dael Construction ka qenë pjesë e transformimit urban në Tiranë duke ofruar rezidenca moderne, projekte inovatore dhe zgjidhje të qëndrueshme ndërtimi. Fokusi ynë është përtej ndërtimit të objekteve fizike: ne synojmë të krijojmë ambiente banimi ku njerëzit mund të zhvillohen dhe të krijojnë histori jetësore.</p>
+            <h2>{t('home.about.title')}</h2>
+            <p>{t('home.about.description')}</p>
             
             <div className={styles.statsContainer}>
               <div className={styles.statItem}>
-                <span className={styles.statNumber}>17</span>
-                <span className={styles.statLabel}>VITE EKSPERIENCË</span>
+                <AnimatedNumber targetNumber={17} duration={2000} startDelay={0} />
+                <span className={styles.statLabel}>{t('common.yearsExperience')}</span>
               </div>
               <div className={styles.statItem}>
-                <span className={styles.statNumber}>24</span>
-                <span className={styles.statLabel}>REZIDENCA</span>
+                <AnimatedNumber targetNumber={24} duration={2000} startDelay={200} />
+                <span className={styles.statLabel}>{t('common.residences')}</span>
               </div>
               <div className={styles.statItem}>
-                <span className={styles.statNumber}>3</span>
-                <span className={styles.statLabel}>NË NDËRTIM</span>
+                <AnimatedNumber targetNumber={3} duration={1500} startDelay={400} />
+                <span className={styles.statLabel}>{t('common.inConstruction')}</span>
               </div>
             </div>
             
             <Link href="/about" className={styles.aboutButton}>
-              RRETH NESH
+              {t('home.about.button')}
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
                 alt="Arrow"

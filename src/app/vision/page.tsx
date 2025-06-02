@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
@@ -6,23 +8,26 @@ import DescriptiveCard from '@/components/DescriptiveCard/DescriptiveCard';
 import ContactSection from '@/components/ContactSection/ContactSection';
 import styles from './page.module.scss';
 import ObjectivesSection from '@/components/ObjectivesSection/ObjectivesSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function VisionPage() {
+  const { t } = useLanguage();
+
   const sustainabilityItems = [
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Inovacioni Teknologjik',
-      description: 'Një skuadër me ekspertë të fushës, që kombinojnë dijen teknike me një qasje vizionare.'
+      title: t('vision.sustainability.innovation.title'),
+      description: t('vision.sustainability.innovation.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Zhvillim Social',
-      description: 'Ofrimi i facilitetit si zona të përbashkëta rekreative, ambjente pushimi dhe hapësira të gjelbra.'
+      title: t('vision.sustainability.social.title'),
+      description: t('vision.sustainability.social.description')
     },
     {
       icon: '/images/icons/about-icon.svg',
-      title: 'Qasje Afatgjatë',
-      description: 'Investojmë në rezistencën e ndërtesave ndaj kohës dhe ndryshimeve klimatike, duke krijuar një aset me vlerë për brezat e ardhshëm.'
+      title: t('vision.sustainability.longterm.title'),
+      description: t('vision.sustainability.longterm.description')
     }
   ];
 
@@ -32,7 +37,7 @@ export default function VisionPage() {
       
       <IntroCard 
         backgroundImage="/images/pages/vision/vision-background.png"
-        title="Vizioni ynë"
+        title={t('vision.title')}
       />
       
       <main className={styles.main}>
@@ -50,11 +55,11 @@ export default function VisionPage() {
 
             <div className={styles.visionDescription}>
               <div className={styles.brandContainer}>
-                <span className={styles.brandText}>FILOZOFIA E ZHVILLIMIT</span>
+                <span className={styles.brandText}>{t('vision.philosophyTitle')}</span>
                 <span className={styles.brandLine}></span>
               </div>
               <p>
-                Vizioni ynë është të nxisim standarde të reja në ndërtimin rezidencial, duke sjellë projekte inovative që pasqyrojnë zhvillimin më të fundit në arkitekturë dhe teknologji. Ne mendojmë se banesa nuk është thjesht një investim, por një hapësirë ku njerëzit rrisin familjet e tyre, krijojnë kujtime dhe ndërtojnë të ardhmen. Prandaj, çdo projekt është një mundësi për të ofruar diçka më shumë sesa muret e një shtëpie – ofrojmë cilësi jete.
+                {t('vision.description')}
               </p>
             </div>
           </div>
@@ -67,11 +72,11 @@ export default function VisionPage() {
           imageOnLeft={false}
           backgroundColor="#1C222B"
           showBrand={true}
-          brandText="QËNDRUESHMËRIA DHE KOMUNITETI"
+          brandText={t('vision.sustainabilityTitle')}
           iconBackgroundColor="#1C222B"
           imageWidth={709.25}
           imageHeight={566}
-          introText="Dael Construction angazhohet për ruajtjen e mjedisit dhe ndërtimin e komuniteteve të shëndetshme."
+          introText={t('vision.sustainabilityIntro')}
         />
         
         <ObjectivesSection />

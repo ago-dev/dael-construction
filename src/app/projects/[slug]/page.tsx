@@ -1,47 +1,22 @@
+"use client";
+
 import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './page.module.scss';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel';
 import { notFound } from 'next/navigation';
 import { getProject } from '@/lib/sanity.client';
-import { urlFor, urlForHighQuality, urlForOriginal, urlForPurePNG, urlForGalleryPreview } from '@/lib/sanity.client';
+import { urlForGalleryPreview } from '@/lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
-import OriginalImage from '@/components/OriginalImage/OriginalImage';
-import { Metadata } from 'next';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-// Set to dynamic to prevent static generation
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // Revalidate every hour
-
-type Params = Promise<{
-  slug: string;
-}>;
-
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  try {
-    const { slug } = await params;
-    const project = await getProject(slug);
-
-    if (!project) {
-      return {
-        title: 'Projekti nuk u gjet | DAEL Construction',
-        description: 'Projekti i kërkuar nuk u gjet',
-      };
-    }
-
-    return {
-      title: `${project.title} | DAEL Construction`,
-      description: `Detaje për projektin ${project.title} nga DAEL Construction`,
-    };
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-    return {
-      title: 'DAEL Construction Project',
-      description: 'View project details',
-    };
-  }
+interface ProjectPageProps {
+  params: Promise<{
+    slug: string;
+  }>;
 }
 
 function extractGalleryImages(project: any) {
@@ -72,69 +47,57 @@ function extractGalleryImages(project: any) {
   return images;
 }
 
-export default async function Page({ params }: { params: Params }) {
-  try {
-    const { slug } = await params;
-    const project = await getProject(slug);
+export default function Page({ params }: ProjectPageProps) {
+  const { t } = useLanguage();
+  const [slug, setSlug] = useState<string>('');
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-    if (!project) {
-      notFound();
-    }
+  useEffect(() => {
+    const loadProject = async () => {
+      try {
+        const resolvedParams = await params;
+        const projectSlug = resolvedParams.slug;
+        setSlug(projectSlug);
+        
+        const projectData = await getProject(projectSlug);
+        
+        if (!projectData) {
+          notFound();
+        }
+        
+        setProject(projectData);
+      } catch (error) {
+        console.error('Error loading project page:', error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const galleryImages = extractGalleryImages(project);
+    loadProject();
+  }, [params]);
 
+  if (loading) {
     return (
       <div className={styles.projectPage}>
         <Header variant="dark" />
-
-        <ProjectCarousel images={galleryImages} />
-
         <div className={styles.projectContainer}>
-          <Link href="/projects" className={styles.backLink}>
-            <Image
-              src="/images/icons/arrow-left-2.svg"
-              alt="Back"
-              width={16}
-              height={16}
-            />
-            KTHEHU TEK PROJEKTET
-          </Link>
-
-          <div className={styles.projectHeader}>
-            <h1>{project.title}</h1>
-
-            <div className={styles.projectStats}>
-              <div className={styles.statItem}>
-                <h3>HAPËSIRA E NDËRTIMIT</h3>
-                <p>{project.hapesira}</p>
-              </div>
-
-              <div className={styles.statItem}>
-                <h3>APARTAMENTE</h3>
-                <p>{project.apartamente}</p>
-              </div>
-
-              <div className={styles.statItem}>
-                <h3>NDËRTUAR</h3>
-                <p>{project.ndertuar}</p>
-              </div>
-            </div>
-          </div>
-
-          <p className={styles.description}>{project.description}</p>
+          <p>{t('home.projects.loading')}</p>
         </div>
-
         <Footer />
       </div>
     );
-  } catch (error) {
-    console.error('Error loading project page:', error);
+  }
+
+  if (error || !project) {
     return (
       <div className={styles.projectPage}>
         <Header variant="dark" />
         <div className={styles.projectContainer}>
-          <h1>Error Loading Project</h1>
-          <p>Could not load the project data. Please try again later.</p>
+          <h1>{t('project.loadError')}</h1>
+          <p>{t('project.loadErrorDescription')}</p>
           <Link href="/projects" className={styles.backLink}>
             <Image
               src="/images/icons/arrow-left-2.svg"
@@ -142,11 +105,58 @@ export default async function Page({ params }: { params: Params }) {
               width={16}
               height={16}
             />
-            BACK TO PROJECTS
+            {t('common.backToProjects')}
           </Link>
         </div>
         <Footer />
       </div>
     );
   }
+
+  const galleryImages = extractGalleryImages(project);
+
+  return (
+    <div className={styles.projectPage}>
+      <Header variant="dark" />
+
+      <ProjectCarousel images={galleryImages} />
+
+      <div className={styles.projectContainer}>
+        <Link href="/projects" className={styles.backLink}>
+          <Image
+            src="/images/icons/arrow-left-2.svg"
+            alt="Back"
+            width={16}
+            height={16}
+          />
+          {t('common.backToProjects')}
+        </Link>
+
+        <div className={styles.projectHeader}>
+          <h1>{project.title}</h1>
+
+          <div className={styles.projectStats}>
+            <div className={styles.statItem}>
+              <h3>{t('project.constructionArea')}</h3>
+              <p>{project.hapesira}</p>
+            </div>
+
+            <div className={styles.statItem}>
+              <h3>{t('project.apartments')}</h3>
+              <p>{project.apartamente}</p>
+            </div>
+
+            <div className={styles.statItem}>
+              <h3>{t('project.built')}</h3>
+              <p>{project.ndertuar}</p>
+            </div>
+          </div>
+        </div>
+
+        <p className={styles.description}>{project.description}</p>
+      </div>
+
+      <Footer />
+    </div>
+  );
 }

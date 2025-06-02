@@ -1,11 +1,16 @@
+"use client";
+
 // Footer component
 // Will display site navigation, contact info, social links, etc. 
 
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Footer.module.scss';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.contentContainer}>
@@ -22,16 +27,16 @@ const Footer = () => {
           <div className={styles.navigationContainer}>
             <nav className={styles.navigation}>
               <Link href="/about" className={styles.navLink}>
-                Rreth nesh
+                {t('nav.about')}
               </Link>
               <Link href="/vision" className={styles.navLink}>
-                Vizioni ynë
+                {t('nav.vision')}
               </Link>
               <Link href="/projects" className={styles.navLink}>
-                Projektet tona
+                {t('nav.ourProjects')}
               </Link>
               <Link href="/contact" className={styles.navLink}>
-                Kontakto
+                {t('nav.contact')}
               </Link>
             </nav>
             

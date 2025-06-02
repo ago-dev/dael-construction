@@ -5,6 +5,7 @@ import styles from './ProjectsSection.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlFor, urlForHighQuality, urlForThumbnail } from '@/lib/sanity.client';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Type for Sanity project
 type SanityProject = {
@@ -28,6 +29,7 @@ const fetchProjects = async (): Promise<SanityProject[]> => {
 };
 
 const ProjectsSection = () => {
+  const { t } = useLanguage();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -116,12 +118,12 @@ const ProjectsSection = () => {
                 height={24}
                 className={styles.sectionIcon}
               />
-              <h2>Projektet</h2>
+              <h2>{t('home.projects.title')}</h2>
             </div>
-            <p>Ne kemi zhvilluar dhjetëra projekte rezidenciale në Tiranë, duke ofruar standardet më të larta në ndërtim, dizajn funksional dhe hapësira të mirë organizuara.</p>
+            <p>{t('home.projects.description')}</p>
           </div>
           <Link href="/projects" className={styles.projectsButton}>
-            TË GJITHA PROJEKTET
+            {t('home.projects.button')}
             <Image 
               src="/images/icons/tabler-icon-arrow-down-left.svg"
               alt="Arrow"
@@ -135,11 +137,11 @@ const ProjectsSection = () => {
         <div className={styles.galleryWrapper}>
           <div className={styles.projectsGallery} ref={scrollContainerRef}>
             {isLoading ? (
-              <div className={styles.loadingState}>Duke u ngarkuar projektet...</div>
+              <div className={styles.loadingState}>{t('home.projects.loading')}</div>
             ) : error ? (
-              <div className={styles.errorState}>Nuk u arrit të shfaqen projektet.</div>
+              <div className={styles.errorState}>{t('home.projects.error')}</div>
             ) : projects.length === 0 ? (
-              <div className={styles.emptyState}>Nuk ka projekte për të shfaqur.</div>
+              <div className={styles.emptyState}>{t('home.projects.empty')}</div>
             ) : (
               projects.map((project: SanityProject) => (
                 <div key={project._id} className={styles.projectCard}>
@@ -154,7 +156,7 @@ const ProjectsSection = () => {
                       />
                     ) : (
                       <div className={styles.noImage}>
-                        <p>Nuk ka imazh</p>
+                        <p>{t('projects.noImage')}</p>
                       </div>
                     )}
                   </div>
@@ -182,7 +184,7 @@ const ProjectsSection = () => {
           
           <div className={styles.controlsContainer}>
             <Link href="/projects" className={styles.mobileProjectsButton}>
-              TË GJITHA PROJEKTET
+              {t('home.projects.button')}
               <Image 
                 src="/images/icons/tabler-icon-arrow-down-left.svg"
                 alt="Arrow"

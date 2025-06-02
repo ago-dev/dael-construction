@@ -1,122 +1,142 @@
+"use client";
+
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from './page.module.scss';
 import Header from '@/components/Header/Header';
 import IntroCard from '@/components/IntroCard/IntroCard';
-import Image from 'next/image';
-import Link from 'next/link';
 import Footer from '@/components/Footer/Footer';
 import { getProjects } from '@/lib/sanity.client';
-import { urlFor, urlForHighQuality, urlForThumbnail } from '@/lib/sanity.client';
+import { urlForThumbnail } from '@/lib/sanity.client';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useEffect, useState } from 'react';
 
-// Set to dynamic to prevent static generation
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // Revalidate every hour
-
-// Sanity project type
-type SanityProject = {
+interface SanityProject {
   _id: string;
   title: string;
   slug: { current: string };
-  description?: string;
   year: number;
-  ndertuar?: number;
-  hapesira?: string;
-  apartamente?: string;
-  featuredImage: any;
-};
+  featuredImage?: any;
+}
 
-export const metadata = {
-  title: 'Projektet | DAEL Construction',
-  description: 'Shikoni projektet e realizuara nga DAEL Construction',
-};
+const ProjectsPage = () => {
+  const { t } = useLanguage();
+  const [projects, setProjects] = useState<SanityProject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-const ProjectsPage = async () => {
-  try {
-    // Fetch projects from Sanity
-    const projects = await getProjects();
-    
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectsData = await getProjects();
+        setProjects(projectsData || []);
+      } catch (error) {
+        console.error('Error loading projects page:', error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
     return (
       <div className={styles.projectsPage}>
         <Header variant="dark" />
-        
         <IntroCard 
           backgroundImage="/images/pages/projects/projects-background.png"
-          title="Projektet tona"
+          title={t('projects.title')}
         />
-        
-        {projects && projects.length > 0 ? (
-          <div className={styles.projectsContainer}>
-            {projects.map((project: SanityProject) => (
-              <div key={project._id} className={styles.projectItem}>
-                <div className={styles.projectImage}>
-                  {project.featuredImage ? (
-                    <Image 
-                      src={urlForThumbnail(project.featuredImage).url()}
-                      alt={project.title}
-                      width={528}
-                      height={384}
-                      style={{ width: '100%', height: 'auto' }}
-                      priority
-                      quality={100}
-                    />
-                  ) : (
-                    <div className={styles.noImage}>
-                      <p>Nuk ka imazh</p>
-                    </div>
-                  )}
-                </div>
-                <div className={styles.itemDescription}>
-                  <h2>{project.title}</h2>
-                  <span className={styles.year}>{project.year}</span>
-                
-                  <Link href={`/projects/${project.slug.current}`} className={styles.projectButton}>
-                    SHIKO PROJEKTIN
-                    <Image 
-                      src="/images/icons/tabler-icon-arrow-down-left.svg"
-                      alt="Arrow"
-                      width={16}
-                      height={16}
-                      className={styles.buttonIcon}
-                    />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.noProjects}>
-            <p>Nuk ka projekte për të shfaqur. Ju lutemi shtoni disa projekte në Sanity Studio.</p>
-            <Link href="/admin" className={styles.adminLink}>
-              Shko te Admin Panel
-            </Link>
-          </div>
-        )}
-        
-        <Footer />
-      </div>
-    );
-  } catch (error) {
-    console.error('Error loading projects page:', error);
-    return (
-      <div className={styles.projectsPage}>
-        <Header variant="dark" />
-        
-        <IntroCard 
-          backgroundImage="/images/pages/projects/projects-background.png"
-          title="Projektet tona"
-        />
-        
-        <div className={styles.noProjects}>
-          <p>Gabim gjatë marrjes së projekteve. Ju lutemi provoni përsëri më vonë.</p>
-          <Link href="/" className={styles.adminLink}>
-            Kthehu në faqen kryesore
-          </Link>
+        <div className={styles.projectsContainer}>
+          <p>{t('home.projects.loading')}</p>
         </div>
-        
         <Footer />
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className={styles.projectsPage}>
+        <Header variant="dark" />
+        <IntroCard 
+          backgroundImage="/images/pages/projects/projects-background.png"
+          title={t('projects.title')}
+        />
+        <div className={styles.noProjects}>
+          <p>{t('projects.fetchError')}</p>
+          <Link href="/" className={styles.adminLink}>
+            {t('common.backToHome')}
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.projectsPage}>
+      <Header variant="dark" />
+      
+      <IntroCard 
+        backgroundImage="/images/pages/projects/projects-background.png"
+        title={t('projects.title')}
+      />
+      
+      {projects && projects.length > 0 ? (
+        <div className={styles.projectsContainer}>
+          {projects.map((project: SanityProject) => (
+            <div key={project._id} className={styles.projectItem}>
+              <div className={styles.projectImage}>
+                {project.featuredImage ? (
+                  <Image 
+                    src={urlForThumbnail(project.featuredImage).url()}
+                    alt={project.title}
+                    width={528}
+                    height={384}
+                    style={{ width: '100%', height: 'auto' }}
+                    priority
+                    quality={100}
+                  />
+                ) : (
+                  <div className={styles.noImage}>
+                    <p>{t('projects.noImage')}</p>
+                  </div>
+                )}
+              </div>
+              <div className={styles.itemDescription}>
+                <h2>{project.title}</h2>
+                <span className={styles.year}>{project.year}</span>
+              
+                <Link href={`/projects/${project.slug.current}`} className={styles.projectButton}>
+                  {t('common.viewProject')}
+                  <Image 
+                    src="/images/icons/tabler-icon-arrow-down-left.svg"
+                    alt="Arrow"
+                    width={16}
+                    height={16}
+                    className={styles.buttonIcon}
+                  />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.noProjects}>
+          <p>{t('projects.noProjects')}</p>
+          <Link href="/admin" className={styles.adminLink}>
+            {t('projects.adminLink')}
+          </Link>
+        </div>
+      )}
+      
+      <Footer />
+    </div>
+  );
 };
 
 export default ProjectsPage; 

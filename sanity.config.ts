@@ -29,4 +29,13 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
+  
+  // Configure image upload settings
+  form: {
+    // Configure image upload settings
+    image: {
+      // Set default image processing options
+      directUploads: true,
+    }
+  }
 }) 

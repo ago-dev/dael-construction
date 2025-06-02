@@ -25,6 +25,27 @@ export function urlFor(source: any) {
   return builder.image(source)
 }
 
+// Enhanced function for high-quality images
+export function urlForHighQuality(source: any) {
+  return builder.image(source).format('png').quality(100)
+}
+
+// Function specifically for preserving original format and quality
+export function urlForOriginal(source: any) {
+  return builder.image(source).quality(100)
+}
+
+// Custom function with specific format and quality control
+export function urlForCustom(source: any, format: 'png' | 'jpg' | 'webp' = 'png', quality: number = 100) {
+  return builder.image(source).format(format).quality(quality)
+}
+
+// Function for responsive images with high quality
+export function urlForResponsive(source: any, width: number, height?: number) {
+  const imageBuilder = builder.image(source).format('png').quality(100).width(width);
+  return height ? imageBuilder.height(height) : imageBuilder;
+}
+
 // Function to fetch all projects
 export async function getProjects() {
   try {

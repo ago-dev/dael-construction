@@ -5,7 +5,7 @@ import Footer from '@/components/Footer/Footer';
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel';
 import { notFound } from 'next/navigation';
 import { getProject } from '@/lib/sanity.client';
-import { urlFor } from '@/lib/sanity.client';
+import { urlFor, urlForHighQuality } from '@/lib/sanity.client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -48,7 +48,7 @@ function extractGalleryImages(project: any) {
 
   if (project.featuredImage) {
     try {
-      images.push(urlFor(project.featuredImage).width(1200).height(800).url());
+      images.push(urlForHighQuality(project.featuredImage).width(1200).height(800).url());
     } catch (e) {
       console.error('Error processing featured image:', e);
     }
@@ -58,7 +58,7 @@ function extractGalleryImages(project: any) {
     project.gallery.forEach((item: any) => {
       if (item.asset) {
         try {
-          images.push(urlFor(item.asset).width(1200).height(800).url());
+          images.push(urlForHighQuality(item.asset).width(1200).height(800).url());
         } catch (e) {
           console.error('Error processing gallery image:', e);
         }

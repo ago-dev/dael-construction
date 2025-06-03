@@ -81,7 +81,7 @@ const AboutSection = () => {
             
             <div className={styles.statsContainer}>
               <div className={styles.statItem}>
-                <AnimatedNumber targetNumber={17} duration={2000} startDelay={0} />
+                <AnimatedNumber targetNumber={10} duration={2000} startDelay={0} />
                 <span className={styles.statLabel}>{t('common.yearsExperience')}</span>
               </div>
               <div className={styles.statItem}>

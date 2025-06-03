@@ -25,7 +25,7 @@ export const translations = {
 
     // About Page
     'about.title': 'Rreth nesh',
-    'about.description': 'Dael Construction ka nisur rrugëtimin e saj në vitin 2008 me qëllimin për t\'i sjellë Tiranës një model të ri ndërtimi: kompleks banimi me standarde të larta europiane, dizajn funksional dhe një qasje të qëndrueshme ndaj zhvillimit urban. Qysh prej fillimeve tona, kemi arritur të krijojmë një reputacion solid falë punës së palodhur, inovacionit të vazhdueshëm dhe përkushtimit për t\'u sjellë klientëve tanë siguri dhe cilësi.',
+    'about.description': 'Dael Construction ka nisur rrugëtimin e saj në vitin 2015 me qëllimin për t\'i sjellë Tiranës një model të ri ndërtimi: kompleks banimi me standarde të larta europiane, dizajn funksional dhe një qasje të qëndrueshme ndaj zhvillimit urban. Qysh prej fillimeve tona, kemi arritur të krijojmë një reputacion solid falë punës së palodhur, inovacionit të vazhdueshëm dhe përkushtimit për t\'u sjellë klientëve tanë siguri dhe cilësi.',
     'about.teamTitle': 'EKIPI DHE EKSPERTIZA',
     'about.distinctiveTitle': 'ÇFARË NA VEÇON',
     'about.valuesTitle': 'Vlerat themelore',
@@ -117,11 +117,11 @@ export const translations = {
 
     // Home Page Sections
     'home.hero.title': 'Ne ndërtojmë hapësira që frymëzojnë jetesë moderne.',
-    'home.hero.description': 'Me mbi 17 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.',
+    'home.hero.description': 'Me mbi 10 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.',
     'home.hero.button': 'SHIKO MË SHUMË',
     
     'home.about.title': 'Rreth nesh',
-    'home.about.description': 'Prej vitit 2008, Dael Construction ka qenë pjesë e transformimit urban në Tiranë duke ofruar rezidenca moderne, projekte inovatore dhe zgjidhje të qëndrueshme ndërtimi. Fokusi ynë është përtej ndërtimit të objekteve fizike: ne synojmë të krijojmë ambiente banimi ku njerëzit mund të zhvillohen dhe të krijojnë histori jetësore.',
+    'home.about.description': 'Prej vitit 2015, Dael Construction ka qenë pjesë e transformimit urban në Tiranë duke ofruar rezidenca moderne, projekte inovatore dhe zgjidhje të qëndrueshme ndërtimi. Fokusi ynë është përtej ndërtimit të objekteve fizike: ne synojmë të krijojmë ambiente banimi ku njerëzit mund të zhvillohen dhe të krijojnë histori jetësore.',
     'home.about.button': 'RRETH NESH',
     
     'home.vision.title': 'VIZIONI YNË',
@@ -168,7 +168,7 @@ export const translations = {
 
     // About Page
     'about.title': 'About Us',
-    'about.description': 'began its journey in 2008 with the goal of bringing Tirana a new construction model: residential complexes with high European standards, functional design, and a sustainable approach to urban development. Since our beginnings, we have managed to create a solid reputation thanks to tireless work, continuous innovation, and commitment to providing our clients with security and quality.',
+    'about.description': 'began its journey in 2015 with the goal of bringing Tirana a new construction model: residential complexes with high European standards, functional design, and a sustainable approach to urban development. Since our beginnings, we have managed to create a solid reputation thanks to tireless work, continuous innovation, and commitment to providing our clients with security and quality.',
     'about.teamTitle': 'TEAM AND EXPERTISE',
     'about.distinctiveTitle': 'WHAT SETS US APART',
     'about.valuesTitle': 'Core Values',
@@ -260,11 +260,11 @@ export const translations = {
 
     // Home Page Sections
     'home.hero.title': 'We build spaces that inspire modern living.',
-    'home.hero.description': 'With over 17 years of experience, Dael Construction designs and develops modern residential complexes that balance comfort, technology, and community.',
+    'home.hero.description': 'With over 10 years of experience, Dael Construction designs and develops modern residential complexes that balance comfort, technology, and community.',
     'home.hero.button': 'LEARN MORE',
     
     'home.about.title': 'About Us',
-    'home.about.description': 'Since 2008, Dael Construction has been part of Tirana\'s urban transformation by offering modern residences, innovative projects, and sustainable construction solutions. Our focus goes beyond building physical structures: we aim to create living environments where people can thrive and create life stories.',
+    'home.about.description': 'Since 2015, Dael Construction has been part of Tirana\'s urban transformation by offering modern residences, innovative projects, and sustainable construction solutions. Our focus goes beyond building physical structures: we aim to create living environments where people can thrive and create life stories.',
     'home.about.button': 'ABOUT US',
     
     'home.vision.title': 'OUR VISION',

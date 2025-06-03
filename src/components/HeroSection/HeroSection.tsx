@@ -64,7 +64,7 @@ const HeroSection = () => {
 
         <div className={styles.content}>
           <h1>{t('home.hero.title', 'Ne ndërtojmë hapësira që frymëzojnë jetesë moderne.')}</h1>
-          <p>{t('home.hero.description', 'Me mbi 17 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.')}</p>
+          <p>{t('home.hero.description', 'Me mbi 10 vite eksperiencë, Dael Construction projekton dhe zhvillon komplekse moderne banimi që balancojnë komoditetin, teknologjinë dhe komunitetin.')}</p>
           <div className={styles.buttonContainer}>
             <button onClick={handleScrollToAbout}>
               {t('home.hero.button', 'SHIKO MË SHUMË')}

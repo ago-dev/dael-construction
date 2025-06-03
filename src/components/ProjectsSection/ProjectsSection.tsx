@@ -62,10 +62,9 @@ const ProjectsSection = () => {
       // Check if we can scroll left
       setCanScrollLeft(container.scrollLeft > 0);
       
-      // Check if we can scroll right
-      setCanScrollRight(
-        container.scrollWidth > container.clientWidth + container.scrollLeft
-      );
+      // Check if we can scroll right - account for padding
+      const scrollRight = container.scrollWidth - container.clientWidth - container.scrollLeft;
+      setCanScrollRight(scrollRight > 10); // Add small threshold to account for rounding
     }
   };
 
@@ -95,13 +94,15 @@ const ProjectsSection = () => {
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -624, behavior: 'smooth' });
+      // Card width (312px) + gap (24px) = 336px, scroll 2 cards at a time
+      scrollContainerRef.current.scrollBy({ left: -672, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 624, behavior: 'smooth' });
+      // Card width (312px) + gap (24px) = 336px, scroll 2 cards at a time
+      scrollContainerRef.current.scrollBy({ left: 672, behavior: 'smooth' });
     }
   };
 

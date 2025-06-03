@@ -15,8 +15,10 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // Disable CDN to get fresh data
-  perspective: 'published', // Ensure we get published content
+  useCdn: process.env.NODE_ENV === 'production',
+  perspective: 'published',
+  // Add token for write access if available
+  token: process.env.SANITY_API_TOKEN,
 })
 
 // Helper function for generating image URLs

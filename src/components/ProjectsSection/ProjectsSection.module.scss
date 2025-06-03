@@ -132,6 +132,14 @@
   @include mix.desktop {
     margin-right: calc(-50vw + 50% + 4%);
   }
+  
+  @include mix.tablet {
+    margin-right: -80px;
+  }
+  
+  @include mix.mobile {
+    margin-right: -40px;
+  }
 }
 
 .navigationButtons {
@@ -177,10 +185,23 @@
   gap: vars.$spacing-lg;
   overflow-x: auto;
   padding: 10px 0;
+  padding-right: calc(50vw - 50% + 150px);
   width: 100%;
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-behavior: smooth;
+  
+  @include mix.desktop {
+    padding-right: calc(50vw - 50% + 100px);
+  }
+  
+  @include mix.tablet {
+    padding-right: 80px;
+  }
+  
+  @include mix.mobile {
+    padding-right: 40px;
+  }
   
   &::-webkit-scrollbar {
     display: none;

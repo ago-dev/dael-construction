@@ -266,7 +266,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
           
           <div className={styles.mapContainer}>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.0557193455484!2d19.81870731744384!3d41.32750000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE5JzM5LjAiTiAxOcKwNDknMDcuNCJF!5e1!3m2!1sen!2sus!4v1623456789012!5m2!1sen!2sus" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1469.5107620190106!2d19.759265300000003!3d41.3829436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135033006396f38f%3A0x1170fc87164160a1!2sKAMZA%201%2C%20DAEL%20CONSTRUCTION%20SHPK!5e1!3m2!1sen!2s!4v1748966375561!5m2!1sen!2s" 
               width="100%" 
               height="398" 
               style={{ border: 0 }} 
@@ -286,7 +286,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                     height={16}
                   />
                 </div>
-                <p>+355 696090007</p>
+                <p>+35567 2043 888</p>
               </div>
               
               <div className={styles.contactItem}>
@@ -298,7 +298,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                     height={16}
                   />
                 </div>
-                <p>sales@dael.construction.com</p>
+                <p>info@dael.al</p>
               </div>
               
               <div className={styles.contactItem}>
@@ -310,7 +310,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ hideTitle = false }) =>
                     height={16}
                   />
                 </div>
-                <p>Rruga e Kosovareve 16, Tiranë, 1019, Albania</p>
+                <p>Rruga Skënderbeu 1030, Kamëz, Albania</p>
               </div>
             </div>
           </div>

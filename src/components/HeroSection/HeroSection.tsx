@@ -103,16 +103,7 @@ const HeroSection = () => {
           </div>
         </div>
         
-        <div className={styles.imageContainer}>
-          <Image
-            src={currentProject.image}
-            alt={currentProject.name}
-            fill
-            className={styles.heroImage}
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-          />
-        </div>
+        {/* Removed imageContainer since we use CSS background images */}
       </div>
     </section>
   );

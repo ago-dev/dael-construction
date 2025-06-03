@@ -8,7 +8,7 @@ import Header from '@/components/Header/Header';
 import IntroCard from '@/components/IntroCard/IntroCard';
 import Footer from '@/components/Footer/Footer';
 import { getProjects } from '@/lib/sanity.client';
-import { urlForThumbnail } from '@/lib/sanity.client';
+import { urlForMediumQuality } from '@/lib/sanity.client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 
@@ -93,13 +93,15 @@ const ProjectsPage = () => {
               <div className={styles.projectImage}>
                 {project.featuredImage ? (
                   <Image 
-                    src={urlForThumbnail(project.featuredImage).url()}
+                    src={urlForMediumQuality(project.featuredImage, 800, 600).url()}
                     alt={project.title}
                     width={528}
                     height={384}
                     style={{ width: '100%', height: 'auto' }}
-                    priority
-                    quality={100}
+                    priority={false}
+                    quality={95}
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 528px"
                   />
                 ) : (
                   <div className={styles.noImage}>

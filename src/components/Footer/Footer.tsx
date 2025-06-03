@@ -41,7 +41,7 @@ const Footer = () => {
             </nav>
             
             <div className={styles.socialIcons}>
-              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+              <Link href="https://www.instagram.com/daelconstruction/" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
                 <Image 
                   src="/images/icons/instagram.svg" 
                   alt="Instagram" 
@@ -49,14 +49,14 @@ const Footer = () => {
                   height={20} 
                 />
               </Link>
-              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+              {/* <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
                 <Image 
                   src="/images/icons/facebook.svg" 
                   alt="Facebook" 
                   width={24} 
                   height={24} 
                 />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

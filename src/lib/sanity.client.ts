@@ -15,7 +15,8 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: false, // Disable CDN to get fresh data
+  perspective: 'published', // Ensure we get published content
 })
 
 // Helper function for generating image URLs
@@ -124,22 +125,31 @@ export function urlForRawAsset(source: any) {
   return builder.image(source).url();
 }
 
-// Function to fetch all projects
-export async function getProjects() {
+// Function to fetch all projects with fresh data
+export async function getProjects(fresh = false) {
   try {
-    const result = await client.fetch(
-      `*[_type == "project"] | order(ndertuar desc) {
-        _id,
-        title,
-        slug,
-        description,
-        "year": ndertuar,
-        featuredImage,
-        hapesira,
-        apartamente,
-        gallery
-      }`
-    );
+    const query = `*[_type == "project"] | order(ndertuar desc) {
+      _id,
+      title,
+      slug,
+      description,
+      "year": ndertuar,
+      featuredImage,
+      hapesira,
+      apartamente,
+      gallery
+    }`;
+    
+    // Create a fresh client if we need fresh data
+    const clientToUse = fresh ? createClient({
+      projectId,
+      dataset,
+      apiVersion,
+      useCdn: false,
+      perspective: 'published',
+    }) : client;
+    
+    const result = await clientToUse.fetch(query);
     
     return result || [];
   } catch (error) {
@@ -160,6 +170,11 @@ export async function getProjects() {
       return []; // Return empty array on error
     }
   }
+}
+
+// Function to fetch fresh projects (bypassing all caches)
+export async function getFreshProjects() {
+  return getProjects(true);
 }
 
 // Function to fetch a single project by slug
